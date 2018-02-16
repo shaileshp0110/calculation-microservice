@@ -1,0 +1,28 @@
+{
+  "name": "passengerscalculation",
+  "version": "1.0.0",
+  "description": "Calculation Microservice stub for Passengers Project",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "standard --fix --verbose || exit 0"
+  },
+  "keywords": [
+    "passengers",
+    "calculation"
+  ],
+  "author": "Adrian Gordon",
+  "license": "ISC",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.2",
+    "express": "^4.16.2",
+    "http-status": "^1.0.1",
+    "nconf": "^0.10.0",
+    "request": "^2.83.0",
+    "winston": "^2.4.0"
+  },
+  "devDependencies": {
+    "standard": "^10.0.3"
+  }
+}
