@@ -2,6 +2,7 @@
 const express = require('express')
 const logger = require('../logger/log.js').logger
 const setupAPI = require('../api/api.js').setupAPI
+const bodyParser = require('body-parser')
 
 const startServer = (port) => {
   
@@ -13,6 +14,10 @@ const startServer = (port) => {
 
     const app = express()
 
+    app.use(bodyParser.urlencoded({extended: false}))
+
+    app.use(bodyParser.json())
+    
     app.use((err, req, res, next) => {
       reject(new Error('Something went wrong, err: ' + err))
       res.status(500).send('Something went wrong')
