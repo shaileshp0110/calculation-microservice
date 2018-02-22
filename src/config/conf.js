@@ -176,7 +176,9 @@ nconf.defaults(
       {"commodityCode":"22080000","name":"Spirits","description":"Spirits obtained by distilling grape wine or grape marc"},
       {"commodityCode":"24021000","name":"Cigars","description":"Cigars, cheroots and cigarillos containing tobacco"},
       {"commodityCode":"24022000","name":"Cigarettes","description":"Cigarettes containing tobacco"},
-      {"commodityCode":"24030000","name":"Tobacco","description":"Tobacco"}
+      {"commodityCode":"24031000","name":"Tobacco","description":"Smoking Tobacco"},
+      {"commodityCode":"24039910","name":"Chewing Tobacco","description":"Chewing Tobacco"}
+
 
 
     ],
