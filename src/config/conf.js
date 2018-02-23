@@ -26,7 +26,7 @@ nconf.defaults(
 
     },
     'server': {
-      'port': 3000
+      'port': 3030
     },
     'rrpserviceurl':'http://www.mysupermarket.co.uk/Shopping/FindProducts.aspx?query=cigarettes&store=Tesco&_fcategory=cigarettes&_fbrand=',
     'conversionserviceurl':'https://api.fixer.io/latest?base=',
