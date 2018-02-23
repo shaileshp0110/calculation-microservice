@@ -64,4 +64,4 @@ The above declaration is for:
  'origin' is the country code of the origin of the product (one of the coutry codes as returned by the /countries endpoint)
 
 
-The application is a Node/Express server, running on port 3000 by default (configurable through the config file)
+The application is a Node/Express server, running on port 3030 by default (configurable through the config file)
