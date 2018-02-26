@@ -7,6 +7,7 @@ const request = require ('request')
 
 const convert = (baseCurrency, targetCurrency, value) => {
 
+  
   return new Promise ((resolve, reject) => {
     const url = nconf.get('conversionserviceurl');
     const headers = {
@@ -18,8 +19,7 @@ const convert = (baseCurrency, targetCurrency, value) => {
       headers: headers
 
     }
-
-    request(options, (error, resp, body) => {
+     request(options, (error, resp, body) => {
       if (error) {
         const obj = {
           status: 'ERROR',
@@ -35,17 +35,16 @@ const convert = (baseCurrency, targetCurrency, value) => {
       } else if (resp.statusCode !== 200) {
         var obj = {
           status: 'ERROR',
-          message: JSON.stringify('bad response code: ' + resp.statusCode + ' from: ' + url)
+          message: JSON.stringify('bad response code: ' + resp.statusCode + ' from: ' + url + baseCurrency)
         }
-        logger.error('bad response code: ' + resp.statusCode + ' from: ' + url)
+        logger.error('bad response code: ' + resp.statusCode + ' from: ' + url + baseCurrency)
         reject(obj)
       } else {
         const rates = JSON.parse(body)
         const rate = rates.rates[targetCurrency]
         const convertedValue = rate * value
         
-          
-        resolve({"basecurrency": baseCurrency,"targetcurrency": targetCurrency,"rate": rate,"value": value,"convertedvalue": convertedValue})
+         resolve({"basecurrency": baseCurrency,"targetcurrency": targetCurrency,"rate": rate,"value": value,"convertedvalue": convertedValue})
       }
     })
 

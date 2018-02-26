@@ -24,7 +24,9 @@ const measures = [
   "series":3,
   "calculation": (calculation,request, duty) => {
      return(new Promise ((resolve,reject) =>{
+
       const vatTotal = duty.rate * (request.customsvalue + calculation.excise.total + calculation.import.total)
+      calculation.vat.total = vatTotal
       calculation.total += vatTotal
        let element = {
         "taxtype": duty.taxtype,
@@ -582,7 +584,7 @@ const measures = [
   "calculation": (calculation, request, duty) => {
     return(new Promise ((resolve, reject) => {
       const dutyVal = request.customsvalue  * duty.rate //26% of  value
-        calculation.excise.total += dutyVal
+        calculation.import.total += dutyVal
         calculation.total += dutyVal
 
          let element = {
@@ -654,7 +656,7 @@ const measures = [
   "calculation": (calculation, request, duty) => {
     return(new Promise ((resolve, reject) => {
       const dutyVal = request.customsvalue  * duty.rate //74.9% of  value
-        calculation.excise.total += dutyVal
+        calculation.import.total += dutyVal
         calculation.total += dutyVal
 
          let element = {

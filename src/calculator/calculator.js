@@ -4,6 +4,48 @@ const nconf = require('../config/conf.js').nconf
 const logger = require('../logger/log.js').logger
 
 const measures = require('./measures.js').measures
+const converter = require('../exchangeRateWrapper/erWrapper.js')
+
+
+const convert = (calculationRequests) => {
+  return(new Promise((resolve, reject) => {
+    const conversions = calculationRequests.map( calculationRequest => {
+      return(applyConversion(calculationRequest))
+
+    })
+
+    Promise.all(conversions).then(conversions => {
+      resolve(conversions)
+    })
+
+  }))
+
+}
+
+const applyConversion = (calculationRequest => {
+  return(new Promise((resolve, reject) => {
+    if(typeof calculationRequest.valuecurrency == 'undefined'){ //no source currency - assumed GBP, customs value is entered value
+      calculationRequest.valuecurrency = "GBP"
+      calculationRequest.customsvalue = calculationRequest.value
+      resolve(calculationRequest)
+
+    }
+    else if(calculationRequest.valuecurrency == "GBP"){         //already expressed in GBP -  customs value is entered value
+      calculationRequest.customsvalue = calculationRequest.value
+      resolve(calculationRequest)
+    }
+    else{
+      converter.convert(calculationRequest.valuecurrency,"GBP", calculationRequest.value).then(conversion => {
+        calculationRequest.customsvalue = conversion.convertedvalue
+        calculationRequest.currencyconversion = conversion
+        resolve(calculationRequest)
+      })
+    }
+
+  }))
+
+})
+
 
 const calculate = (calculationRequests) => {
   return(new Promise((resolve, reject) => {
@@ -174,4 +216,4 @@ const getCurrencies = () =>{
 
 
 
-module.exports = Object.assign({}, {getProducts,getCountries,getCurrencies, calculate})
+module.exports = Object.assign({}, {getProducts, getCountries, getCurrencies, calculate, convert})
