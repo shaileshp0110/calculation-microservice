@@ -41,7 +41,7 @@ const setupAPI = (app) => {
     .catch(next)
   })
   app.post('/calculate', (req, res, next) => {
-    calculator.convert(req.body.calculationrequests).then(conversionResults =>{
+    calculator.convert(req.body).then(conversionResults =>{
       calculator.calculate(conversionResults).then(calculationResults =>{
           res.status(status.OK).json(calculationResults)
         })

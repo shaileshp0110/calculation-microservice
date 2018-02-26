@@ -25,13 +25,13 @@ Apart from /cigaretterrps and /calculate, all endpoints return static data from 
 
 /calculate takes a JSON object as an argument such as:
 
-{"calculationrequests":
+
 [{"commoditycode":"22041000","volume":10.00,"customsvalue":100.00,"abv":0.15,"origin":"TR"},
 {"commoditycode":"22030000","volume":10.00,"customsvalue":20.00,"abv":0.08},
 {"commoditycode":"24022000","quantity":1000,"rrp":0.48,"customsvalue":480.00 },
 {"commoditycode":"24021000","customsvalue":1320,"weight":550,"origin":"CU"},
 {"commoditycode":"24031000","commoditycodequalifier":"handrolling","weight":500, "customsvalue":31.45, "origin":"USA"},
-{"commoditycode":"24031000","commoditycodequalifier":"other","weight":500, "customsvalue":31.45, "origin":"USA"}]}
+{"commoditycode":"24031000","commoditycodequalifier":"other","weight":500, "customsvalue":31.45, "origin":"USA"}]
 
 The above declaration is for:
 
@@ -55,7 +55,9 @@ The above declaration is for:
 
 'rrp' is the recommended retail price of a product (e.g. for cigarettes)
 
-'customsvalue' is the total amount paid for the product (assumed already converted to GBP)
+'value' is the total amount paid for the product (in the currency indicated by 'valuecurrency')
+
+'valuecurency' is the three character currency code of the currency in which the payment was made (this is optional - and will be asumed to be GBP if not included)
 
  'abv' is the alcoholic strength of the product
 
