@@ -36,34 +36,42 @@ nconf.defaults(
         "alcohol": {
           "beer": {
             "description":"beer",
+            "commoditycode":"22030000",
             "unit":"litres", 
             "limit": 16
 
           },
           "wine": {
             "description":"wine (not sparkling)",
+            "commoditycode":"22042000",
             "unit":"litres",
             "limit":"4"
           },
           "spirits": {
             "description":"spirits and other liquors over 22% alcohol",
+            "commoditycode":"22080000",
             "unit":"litres",
             "limit": 1
 
           },
           "fortified wine": {
             "description":"fortified wine (eg port, sherry)",
+            "commoditycode":"22040000",
+            "commoditycodequalifier":"fortified",
             "unit":"litres",
             "limit": 2
           },
           "sparkling wine": {
             "description": "sparkling wine (eg champagne, cava, prosecco)",
+            "commoditycode":"22041000",
             "unit":"litres",
             "limit":2
 
           },
           "other (<22%)": {
             "description":"other alcoholic drinks up to 22% alcohol",
+            "commoditycode":"22040000",
+            "commoditycodequalifier":"other",
             "unit":"litres",
             "limit": 2
           }
@@ -72,24 +80,30 @@ nconf.defaults(
 
           "cigarettes": {
             "description":"cigarettes",
+            "commoditycode":"24022000",
             "unit":"units",
             "limit":200
 
           },
           "cigarillos": {
             "description":"cigarillos",
+            "commoditycode":"24021000",
+            "commoditycodequalifier":"cigarillos",
             "unit":"units",
             "limit":100
 
           },
           "cigars": {
             "description":"cigars",
+            "commoditycode":"24021000",
+            "commoditycodequalifier":"cigars",
             "unit":"units",
             "limit":  50
 
           },
           "tobacco": {
             "description": "loose tobacco",
+            "commoditycode":"^2403[0-9]{4}",
             "unit": "grammes",
             "limit":250
 
@@ -424,6 +438,7 @@ nconf.defaults(
     {"countrycode":"ZM","countrytext":"Zambia","countrydescription":"","currencycode":"ZMW"},
     {"countrycode":"ZW","countrytext":"Zimbabwe","countrydescription":"","currencycode":"USD"}
 ],
+"euMembers":["DE","PL","FR","IT","RO","SE","ES","GR","HU","AT","HR","BG","CZ","NL","FI","BE","LT","DK","CY","MT","EE","PT","IE","SK","SI","LV"],
   "currencies":{
   "AED": {
     "name": "UAE Dirham",

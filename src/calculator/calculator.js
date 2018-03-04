@@ -5,6 +5,7 @@ const logger = require('../logger/log.js').logger
 
 const measures = require('./measures.js').measures
 const converter = require('../exchangeRateWrapper/erWrapper.js')
+const allowances = require('../allowancesWrapper/allowanceswrapper.js')
 
 
 const convert = (calculationRequests) => {
@@ -16,6 +17,9 @@ const convert = (calculationRequests) => {
 
     Promise.all(conversions).then(conversions => {
       resolve(conversions)
+    })
+    .catch(error =>{
+      logger.error(error)
     })
 
   }))
@@ -40,11 +44,270 @@ const applyConversion = (calculationRequest => {
         calculationRequest.currencyconversion = conversion
         resolve(calculationRequest)
       })
+      .catch(error =>{
+        logger.error(error)
+      })
     }
 
   }))
 
 })
+
+const allocateAllowances = (countryCode, items) => {
+  return(new Promise((resolve, reject) =>{
+    const allocatedAllowances={
+        
+
+      }
+
+      //Split items into alcohol, tobacco, and other
+      const alcoholItems = []
+      const tobaccoItems = []
+      const otherItems = []
+      const alcoholRegex = new RegExp("^22[0-9]{6}$")
+      const tobaccoRegex = new RegExp("^24[0-9]{6}$")
+
+      items.forEach( item =>{
+        let aMatch = item.commoditycode.match(alcoholRegex)
+        let tMatch = item.commoditycode.match(tobaccoRegex)
+        if(aMatch && (aMatch[0] !== "")) alcoholItems.push(item)
+          else if(tMatch && (tMatch[0] !== "")) tobaccoItems.push(item)
+            else otherItems.push(item)
+        
+      })
+
+      let allowancesCode = "ROW"
+      if(isEUMember(countryCode))allowancesCode="EU"
+
+      allowances.getAllowances(allowancesCode).then(allAllowances => {
+
+        return allocateTobaccoAllowances(allowancesCode,allAllowances,tobaccoItems)
+
+      })
+      .then(tobaccoAllowances =>{
+        //resolve(tobaccoAllowances)//returnedObject
+        allocatedAllowances["tobacco"] = tobaccoAllowances
+        resolve(allocatedAllowances)
+      })
+      .catch(error => {
+        logger.error(error)
+      })
+
+  }))
+}
+
+const allocateTobaccoAllowances = (allowancesCode,regionAllowances,items) =>{
+  //logger.info("Regionalallowances: " + JSON.stringify(regionAllowances.tobacco))
+  return(new Promise((resolve, reject) => {
+    let returnedObject ={
+      "allowances":[],
+
+
+    }
+    
+    let declarations = []
+    calculate(items).then(calculations => { //calculate the duty due on each item
+
+      const allowances = { //working copy of allowances
+          "cigarettes":regionAllowances.tobacco.cigarettes.limit,
+          "cigarillos":regionAllowances.tobacco.cigarillos.limit,
+          "cigars":regionAllowances.tobacco.cigars.limit,
+          "tobacco":regionAllowances.tobacco.tobacco.limit
+
+
+       }
+      calculations.forEach(calculation =>{  //work out the duties/unit for each item, and get the allowances
+
+         
+
+        if(typeof calculation.request.quantity !== 'undefined'){
+          calculation.request.dutyperunit = calculation.total / calculation.request.quantity
+        }
+        else 
+          if(typeof calculation.request.weight !== 'undefined'){
+          calculation.request.dutyperunit = calculation.total / calculation.request.weight
+        }
+        
+        //calculation.request.allowance = getItemLimit(calculation.request.commoditycode,calculation.request.commoditycodequalifier,regionAllowances.tobacco)
+
+
+      })
+
+      //now do the allocation
+
+      
+
+       do{
+       
+              //get the limit
+             // calculation.request.allowance = getItemLimit(calculation.request.commoditycode,calculation.request.commoditycodequalifier,regionAllowances.tobacco)
+            calculations.forEach(calculation => {
+              let category = getItemAllowanceTobaccoCategory(calculation.request.commoditycode,calculation.request.commoditycodequalifier,regionAllowances.tobacco)
+              calculation.request.allowance ={
+                "against": category,
+                "limit": allowances[category]
+              }
+
+              if(typeof calculation.request.quantity !== 'undefined'){
+                
+                calculation.request.savingagainstallowance = allowances[category] > calculation.request.quantity ? calculation.request.quantity * calculation.request.dutyperunit : allowances[category] * calculation.request.dutyperunit
+                calculation.request.claimagainstallowance = allowances[category] > calculation.request.quantity ? calculation.request.quantity  : allowances[category] 
+
+              }
+              else if(typeof calculation.request.weight !== 'undefined'){
+                
+                 calculation.request.savingagainstallowance = allowances[category] > calculation.request.weight ? calculation.request.weight * calculation.request.dutyperunit : allowances[category] * calculation.request.dutyperunit
+                 calculation.request.claimagainstallowance = allowances[category] > calculation.request.weight ? calculation.request.weight  : allowances[category]
+
+              }
+            })
+
+  
+
+            calculations.sort((a,b) =>{
+              if(a.request.savingagainstallowance > b.request.savingagainstallowance) return -1
+              if(b.request.savingagainstallowance > a.request.savingagainstallowance) return 1
+              return 0
+            })
+
+            let ratio = calculations[0].request.claimagainstallowance / allowances[calculations[0].request.allowance.against]
+
+            //adjust remining allowances
+            for(let a in allowances){
+              allowances[a] -= ratio * allowances[a]
+            }
+
+           let allowance = Object.assign({},calculations[0].request)
+           let declaration = Object.assign({},calculations[0].request)
+           
+
+           if(typeof allowance.quantity !== 'undefined'){
+
+              allowance.quantity = allowance.claimagainstallowance //adjust quantities
+              declaration.quantity = declaration.quantity - allowance.claimagainstallowance //subtract allowance quantity from what will be declared
+
+              allowance.value = allowance.value * (allowance.claimagainstallowance) / calculations[0].request.quantity
+              declaration.value = declaration.value - allowance.value
+
+              if(typeof allowance.weight !== 'undefined'){                                                           //and weights, if required
+                
+                  allowance.weight = (allowance.weight * (allowance.claimagainstallowance / calculations[0].request.quantity))    //reduce the weight in proportion
+                  declaration.weight -= allowance.weight
+              }
+            }
+            else if(typeof allowance.weight !== 'undefined'){                                                        //just adjust weight
+                allowance.weight = (allowance.weight * (allowance.claimagainstallowance / calculations[0].request.weight)) 
+                declaration.weight -= allowance.weight
+
+                allowance.value = allowance.value * (allowance.claimagainstallowance) / calculations[0].request.weight
+                declaration.value = declaration.value - allowance.value
+               
+            }
+           delete allowance.customsvalue
+           delete allowance.currencyconversion
+           delete allowance.dutyperunit
+           delete allowance.allowance
+           delete allowance.savingagainstallowance
+           delete allowance.claimagainstallowance
+
+           delete declaration.customsvalue
+           delete declaration.currencyconversion
+           delete declaration.dutyperunit
+           delete declaration.allowance
+           delete declaration.savingagainstallowance
+           delete declaration.claimagainstallowance
+
+            returnedObject.allowances.push(allowance)
+            if((declaration.quantity > 0)||(declaration.weight >0))
+              declarations.push(declaration)
+
+
+            calculations.shift() 
+
+
+
+        } while((calculations.length > 0)&&((allowances['cigarettes'] > 0)||(allowances['cigarillos'] > 0)||(allowances['cigars'] > 0)||(allowances['tobacco'] > 0)))
+
+      //add any remaining items to 'declarations'
+
+      for(let i =0; i< calculations.length;i++){
+        delete calculations[i].request.customsvalue
+        delete calculations[i].request.currencyconversion
+        delete calculations[i].request.dutyperunit
+        delete calculations[i].request.allowance
+        delete calculations[i].request.savingagainstallowance
+        delete calculations[i].request.claimagainstallowance
+        declarations.push(calculations[i].request)
+      }
+
+      convert(declarations)
+      .then(conversionResults =>{
+        return calculate(conversionResults)
+      })
+      .then(calculationResults =>{
+        returnedObject.declarations = calculationResults
+        resolve(returnedObject)
+      })
+      .catch( error =>{
+        logger.error(error)
+      })
+
+      
+    })
+    .catch(error =>{
+          logger.error(error)
+    })
+  }))
+}
+  
+
+const getItemLimit = (commoditycode,commoditycodequalifier,allowances) => {
+  for(let a in allowances){
+    let allowance = allowances[a];
+    const regex = new RegExp(allowance.commoditycode)
+    const match = commoditycode.match(regex);
+    
+  
+   
+    if(match &&(match[0]!== "")){
+      
+      if((typeof allowance.commoditycodequalifier !== 'undefined')&&(allowance.commoditycodequalifier === commoditycodequalifier)){
+
+        return ({
+        "limit":allowance.limit,
+        "against": a
+        })
+      }
+      else if(typeof allowance.commoditycodequalifier === 'undefined')
+        return {
+        "limit":allowance.limit,
+        "against": a
+        }
+    }
+  }
+
+}
+
+const getItemAllowanceTobaccoCategory = (commoditycode,commoditycodequalifier,allowances) => {
+  for(let a in allowances){
+    let allowance = allowances[a];
+    const regex = new RegExp(allowance.commoditycode)
+    const match = commoditycode.match(regex);
+    
+  
+   
+    if(match &&(match[0]!== "")){
+      
+      if((typeof allowance.commoditycodequalifier !== 'undefined')&&(allowance.commoditycodequalifier === commoditycodequalifier)){
+
+        return a
+      }
+      else if(typeof allowance.commoditycodequalifier === 'undefined')
+        return a
+    }
+  }
+
+}
 
 
 const calculate = (calculationRequests) => {
@@ -58,6 +321,9 @@ const calculate = (calculationRequests) => {
     Promise.all(calculations).then(calcs => {
       resolve(calcs)
 
+    })
+    .catch(error =>{
+      logger.error(error)
     })
 
   }))
@@ -157,6 +423,9 @@ const applyMeasures = (matchingmeasures, request) => {
 
         
       })
+      .catch(error =>{
+            logger.error(error)
+      })
 
 
      
@@ -205,6 +474,18 @@ const getCountries = () =>{
   })
 }
 
+const getEUCountries = () =>{
+  return new Promise ((resolve, reject) => {
+    resolve(nconf.get('euMembers'))
+
+  })
+}
+
+const isEUMember = (country) => {
+  if(nconf.get("euMembers").indexOf(country) != -1)return(true)
+    else return(false)
+}
+
 const getCurrencies = () =>{
  
   return new Promise ((resolve, reject) => {
@@ -216,4 +497,6 @@ const getCurrencies = () =>{
 
 
 
-module.exports = Object.assign({}, {getProducts, getCountries, getCurrencies, calculate, convert})
+
+
+module.exports = Object.assign({}, {getProducts, getCountries, isEUMember,getCurrencies, calculate, convert, allocateAllowances})

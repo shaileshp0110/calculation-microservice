@@ -6,11 +6,13 @@ const nconf = require('../config/conf.js').nconf
 const allowances = nconf.get("allowances")
 
 
-const getAllowances = () => {
+const getAllowances = (code) => {
 
   return new Promise((resolve, reject) =>{
-    resolve(allowances)
+    if(code)resolve(allowances[code])
+    else resolve(allowances)
   })
 }
+
 
 module.exports = Object.assign({}, {getAllowances})

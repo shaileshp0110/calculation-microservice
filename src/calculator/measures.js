@@ -4,12 +4,12 @@ const nconf = require('../config/conf.js').nconf
 const logger = require('../logger/log.js').logger
 const converter = require('../exchangeRateWrapper/erWrapper.js')
 
-const euMembers = ["DE","PL","FR","IT","RO","SE","ES","GR","HU","AT","HR","BG","CZ","NL","FI","BE","LT","DK","CY","MT","EE","PT","IE","SK","SI","LV"]
-
-const isEUMember = country => {
-  if(euMembers.indexOf(country) != -1)return(true)
+const isEUMember = (country) => {
+  if(nconf.get("euMembers").indexOf(country) != -1)return(true)
     else return(false)
 }
+
+
 
 const measures = [
 {
