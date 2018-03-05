@@ -77,16 +77,23 @@ const allocateAllowances = (countryCode, items) => {
       })
 
       let allowancesCode = "ROW"
+      let allRegionAllowances
       if(isEUMember(countryCode))allowancesCode="EU"
 
       allowances.getAllowances(allowancesCode).then(allAllowances => {
-
-        return allocateTobaccoAllowances(allowancesCode,allAllowances,tobaccoItems)
+        allRegionAllowances = allAllowances
+        return allocateTobaccoAllowances(allowancesCode,allRegionAllowances,tobaccoItems,allowancesCode)
 
       })
-      .then(tobaccoAllowances =>{
-        //resolve(tobaccoAllowances)//returnedObject
-        allocatedAllowances["tobacco"] = tobaccoAllowances
+      .then(allocatedTobaccoAllowances =>{
+       
+        allocatedAllowances["tobacco"] = allocatedTobaccoAllowances
+
+        return allocateAlcoholAllowances(allowancesCode, allRegionAllowances, alcoholItems,allowancesCode)
+        
+      })
+      .then(allocatedAlcoholAllowances => {
+        allocatedAllowances["alcohol"] = allocatedAlcoholAllowances
         resolve(allocatedAllowances)
       })
       .catch(error => {
@@ -96,7 +103,7 @@ const allocateAllowances = (countryCode, items) => {
   }))
 }
 
-const allocateTobaccoAllowances = (allowancesCode,regionAllowances,items) =>{
+const allocateTobaccoAllowances = (allowancesCode,regionAllowances,items,regionCode) =>{
   //logger.info("Regionalallowances: " + JSON.stringify(regionAllowances.tobacco))
   return(new Promise((resolve, reject) => {
     let returnedObject ={
@@ -104,6 +111,9 @@ const allocateTobaccoAllowances = (allowancesCode,regionAllowances,items) =>{
 
 
     }
+
+    let split = false                 //split will be true if we need to split allowances across the categories (i.e. passenger is ROW)
+    if(regionCode == "ROW")split=true
     
     let declarations = []
     calculate(items).then(calculations => { //calculate the duty due on each item
@@ -142,7 +152,7 @@ const allocateTobaccoAllowances = (allowancesCode,regionAllowances,items) =>{
               //get the limit
              // calculation.request.allowance = getItemLimit(calculation.request.commoditycode,calculation.request.commoditycodequalifier,regionAllowances.tobacco)
             calculations.forEach(calculation => {
-              let category = getItemAllowanceTobaccoCategory(calculation.request.commoditycode,calculation.request.commoditycodequalifier,regionAllowances.tobacco)
+              let category = getItemAllowanceCategory(calculation.request.commoditycode,calculation.request.commoditycodequalifier,regionAllowances.tobacco)
               calculation.request.allowance ={
                 "against": category,
                 "limit": allowances[category]
@@ -173,9 +183,16 @@ const allocateTobaccoAllowances = (allowancesCode,regionAllowances,items) =>{
             let ratio = calculations[0].request.claimagainstallowance / allowances[calculations[0].request.allowance.against]
 
             //adjust remining allowances
-            for(let a in allowances){
-              allowances[a] -= ratio * allowances[a]
+            if(split){ //adjust remaining allowances for other categories
+              for(let a in allowances){
+                allowances[a] -= ratio * allowances[a]
+              }
             }
+            else{ //adjust the reamining allowance for the current category
+              allowances[calculations[0].request.allowance.against] -= ratio * allowances[calculations[0].request.allowance.against]
+
+            }
+            
 
            let allowance = Object.assign({},calculations[0].request)
            let declaration = Object.assign({},calculations[0].request)
@@ -186,7 +203,7 @@ const allocateTobaccoAllowances = (allowancesCode,regionAllowances,items) =>{
               allowance.quantity = allowance.claimagainstallowance //adjust quantities
               declaration.quantity = declaration.quantity - allowance.claimagainstallowance //subtract allowance quantity from what will be declared
 
-              allowance.value = allowance.value * (allowance.claimagainstallowance) / calculations[0].request.quantity
+              allowance.value = allowance.value * (allowance.claimagainstallowance / calculations[0].request.quantity)
               declaration.value = declaration.value - allowance.value
 
               if(typeof allowance.weight !== 'undefined'){                                                           //and weights, if required
@@ -199,7 +216,7 @@ const allocateTobaccoAllowances = (allowancesCode,regionAllowances,items) =>{
                 allowance.weight = (allowance.weight * (allowance.claimagainstallowance / calculations[0].request.weight)) 
                 declaration.weight -= allowance.weight
 
-                allowance.value = allowance.value * (allowance.claimagainstallowance) / calculations[0].request.weight
+                allowance.value = allowance.value * (allowance.claimagainstallowance / calculations[0].request.weight)
                 declaration.value = declaration.value - allowance.value
                
             }
@@ -217,8 +234,9 @@ const allocateTobaccoAllowances = (allowancesCode,regionAllowances,items) =>{
            delete declaration.savingagainstallowance
            delete declaration.claimagainstallowance
 
-            returnedObject.allowances.push(allowance)
-            if((declaration.quantity > 0)||(declaration.weight >0))
+            if((allowance.quantity > 0)||(allowance.weight > 0)) //something to add to allowances
+              returnedObject.allowances.push(allowance)
+            if((declaration.quantity > 0)||(declaration.weight > 0)) //something to add to declarations
               declarations.push(declaration)
 
 
@@ -288,7 +306,7 @@ const getItemLimit = (commoditycode,commoditycodequalifier,allowances) => {
 
 }
 
-const getItemAllowanceTobaccoCategory = (commoditycode,commoditycodequalifier,allowances) => {
+const getItemAllowanceCategory = (commoditycode,commoditycodequalifier,allowances) => {
   for(let a in allowances){
     let allowance = allowances[a];
     const regex = new RegExp(allowance.commoditycode)
@@ -307,6 +325,157 @@ const getItemAllowanceTobaccoCategory = (commoditycode,commoditycodequalifier,al
     }
   }
 
+}
+
+const allocateAlcoholAllowances = (allowancesCode, regionAllowances, items, regionCode) =>{
+  return(new Promise((resolve, reject) =>{
+    let returnedObject ={
+      "allowances":[],
+      "declarations":[]
+    }
+    let split = false                 //split will be true if we need to split allowances across the categories (i.e. passenger is ROW)
+    if(regionCode == "ROW")split=true
+
+    let declarations = []
+    calculate(items).then(calculations => {
+      let allowances
+      if(regionCode == "ROW") 
+        allowances = { //working copy of allowances
+          "wine": regionAllowances.alcohol.wine.limit,
+          "beer": regionAllowances.alcohol.beer.limit,
+          "spirits":regionAllowances.alcohol.spirits.limit,
+          "fortified wine":regionAllowances.alcohol["fortified wine"].limit,
+          "sparkling wine":regionAllowances.alcohol["sparkling wine"].limit,
+          "other (<22%)":regionAllowances.alcohol["other (<22%)"].limit
+         }
+        else{ //EU allowances are categorised differently - e.g. wine and sparkling wine are not differentiated
+           allowances = { //working copy of allowances
+            "wine": regionAllowances.alcohol.wine.limit,
+            "beer": regionAllowances.alcohol.beer.limit,
+            "spirits":regionAllowances.alcohol.spirits.limit,
+            "fortified wine":regionAllowances.alcohol["fortified wine"].limit,
+          }
+         }
+      
+       calculations.forEach(calculation =>{  //work out the duties/unit for each item, and get the allowances
+
+         calculation.request.dutyperunit = calculation.total / calculation.request.volume
+
+      })
+
+      do{
+            calculations.forEach(calculation => {
+              let category = getItemAllowanceCategory(calculation.request.commoditycode,calculation.request.commoditycodequalifier,regionAllowances.alcohol)
+              calculation.request.allowance ={
+                "against": category,
+                "limit": allowances[category]
+              }
+
+              calculation.request.savingagainstallowance = allowances[category] > calculation.request.volume ? calculation.request.volume * calculation.request.dutyperunit : allowances[category] * calculation.request.dutyperunit
+              calculation.request.claimagainstallowance = allowances[category] > calculation.request.volume ? calculation.request.volume  : allowances[category] 
+
+            })
+
+            calculations.sort((a,b) =>{
+              if(a.request.savingagainstallowance > b.request.savingagainstallowance) return -1
+              if(b.request.savingagainstallowance > a.request.savingagainstallowance) return 1
+              return 0
+            })
+
+            let ratio = calculations[0].request.claimagainstallowance / allowances[calculations[0].request.allowance.against]
+
+            let against = calculations[0].request.allowance.against //the category against which we are clainming the allowance
+
+            if(split){      //we are splitting allowances (i.e. it is a ROW passenger)
+              if((against == 'beer')||(against == 'wine')){ //reduce the remaining beer or wine allowance
+              allowances[against] -= ratio * allowances[against]
+              }
+              else if(calculations[0].request.claimagainstallowance > 0){
+                 //adjust remining allowances together, if its not beer or wine, and the amount claimed is > 0
+                for(let a in allowances){
+                  if((a !== "beer")&&(a !== "wine"))
+                    allowances[a] -= ratio * allowances[a]
+                }
+              }
+            }
+            else{ //EU passenger - no split allowances
+              allowances[against] -= ratio * allowances[against]
+            }
+            
+
+
+            let allowance = Object.assign({},calculations[0].request)
+            let declaration = Object.assign({},calculations[0].request)
+
+            allowance.volume = allowance.claimagainstallowance //adjust volumes
+            declaration.volume = declaration.volume - allowance.claimagainstallowance //subtract allowance volume from what will be declared
+
+            allowance.value = allowance.value * (allowance.claimagainstallowance / calculations[0].request.volume)
+            declaration.value = declaration.value - allowance.value
+           
+            delete allowance.customsvalue
+            delete allowance.currencyconversion
+            delete allowance.dutyperunit
+            delete allowance.allowance
+            delete allowance.savingagainstallowance
+            delete allowance.claimagainstallowance
+
+            delete declaration.customsvalue
+            delete declaration.currencyconversion
+            delete declaration.dutyperunit
+            delete declaration.allowance
+            delete declaration.savingagainstallowance
+            delete declaration.claimagainstallowance
+
+            if(allowance.volume > 0)
+              returnedObject.allowances.push(allowance)
+            if(declaration.volume > 0)
+              declarations.push(declaration)
+
+
+            calculations.shift() 
+
+
+      }while((calculations.length > 0)&&((allowances['beer'] > 0)||(allowances['beer'] > 0)||(allowances['spirits'] > 0)||(allowances["fortified wine"] > 0)||(allowances["sparkling wine"] > 0)||(allowances["other (<22%)"] > 0)))
+
+       //add any remaining items to 'declarations'
+
+      for(let i =0; i< calculations.length;i++){
+        delete calculations[i].request.customsvalue
+        delete calculations[i].request.currencyconversion
+        delete calculations[i].request.dutyperunit
+        delete calculations[i].request.allowance
+        delete calculations[i].request.savingagainstallowance
+        delete calculations[i].request.claimagainstallowance
+        declarations.push(calculations[i].request)
+      }
+
+      convert(declarations)
+      .then(conversionResults =>{
+        return calculate(conversionResults)
+      })
+      .then(calculationResults =>{
+        returnedObject.declarations = calculationResults
+        resolve(returnedObject)
+      })
+      .catch( error =>{
+        logger.error(error)
+      })
+
+     // logger.info(JSON.stringify(calculations))
+
+     // returnedObject.declarations = calculations
+
+     // resolve(returnedObject)
+
+    })
+    .catch(error =>{
+          logger.error(error)
+    })
+
+    
+
+  }))
 }
 
 

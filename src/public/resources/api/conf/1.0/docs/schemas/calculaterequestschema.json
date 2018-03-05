@@ -1,0 +1,93 @@
+{	
+	"$schema":"http://json-schema.org/draft-07/schema#",
+	"id":"calculaterequestschema.json",
+	"type":"array",
+	"items":{
+    "type":"object",
+    "anyOf":[
+      {"required":["volume"]},
+      {"required":["quantity"]},
+      {"required":["weight"]}
+    ],
+    "properties":{
+
+    
+      "commoditycode":{
+        "type":"string",
+        "description":"The 8 character Combined Nomenclature (CN) commodity code of the goods",
+        "minLength":8,
+        "maxLength":8,
+        "pattern":"^[0-9]{8}$"
+      },
+      "commoditycodequalifier":{
+        "type":"string",
+        "description":"Certain UK excise duties apply to different commodities which have the same commodity code, e.g.: handrolling vs. other types of loose tobacco",
+        "optional":true,
+        "enum":["handrolling","other"]
+      },
+
+      "volume":{
+        "type":"number",
+        "description":"The volume of the commodity, in litres, if the product is measured by volume (e.g. alchoholic beverages)",
+        
+      },
+
+      "quantity":{
+        "type":"integer",
+        "description":"The number of commodity items, if the product is measured by number (e.g. cigarettes)",
+        
+      },
+
+      "weight":{
+        "type":"number",
+        "description":"The weight of the commodity, in grammes, if the product is measured by weight",
+       
+      },
+
+      "value":{
+        "type":"number",
+        "description":"The amount of money paid to purchase the commodity in it's country of origin"
+      },
+
+      "valuecurrency":{
+        "type":"string",
+        "description":"The currency code for the commodity value",
+        "minLength":3,
+        "maxLength":3,
+        "default":"GBP"
+
+      },
+      "origin":{
+        "type":"string",
+        "description":"The country code of the origin of the commodity",
+        "minLength":2,
+        "maxLength":2
+
+      },
+      "rrp":{
+        "type":"number",
+        "description":"Recommended retail price of the product, per cigarette (commodity code must be 24022000)",
+        "optional":true
+
+      },
+      "abv":{
+        "type":"number",
+        "description":"A.B.V measure of the commodity, if it is an alcoholic beverage, as a decimal",
+        "minimum":0.0,
+        "maximum":1.0,
+        "optional":true
+
+      }
+
+
+    },
+    "if":{
+      "properties":{
+        "commonditycode":{"enum":["24022000"]}
+      }
+    },
+    "then":{"required": ["rrp"]}
+    
+    
+  }
+}

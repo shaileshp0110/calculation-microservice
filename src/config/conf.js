@@ -130,24 +130,30 @@ nconf.defaults(
 
           "cigarettes": {
             "description":"cigarettes",
+            "commoditycode":"24022000",
             "unit":"units",
             "limit":800
 
           },
           "cigarillos": {
             "description":"cigarillos",
+            "commoditycode":"24021000",
+            "commoditycodequalifier":"cigarillos",
             "unit":"units",
             "limit":400
 
           },
           "cigars": {
             "description":"cigars",
+            "commoditycode":"24021000",
+            "commoditycodequalifier":"cigars",
             "unit":"units",
             "limit":  200
 
           },
           "tobacco": {
             "description": "loose tobacco",
+            "commoditycode":"^2403[0-9]{4}",
             "unit": "grammes",
             "limit":1000
 
@@ -156,23 +162,28 @@ nconf.defaults(
         "alcohol": {
           "beer": {
             "description":"beer",
+            "commoditycode":"22030000",
             "unit":"litres", 
             "limit": 110
 
           },
           "wine": {
-            "description":"wine (not sparkling)",
+            "description":"wine",
+            "commoditycode":"^2204[1-2][0-9]{3}",
             "unit":"litres",
             "limit":"90"
           },
           "spirits": {
             "description":"spirits and other liquors over 22% alcohol",
+            "commoditycode":"22080000",
             "unit":"litres",
             "limit": 10
 
           },
           "fortified wine": {
             "description":"fortified wine (eg port, sherry)",
+            "commoditycode":"22040000",
+            "commoditycodequalifier":"fortified",
             "unit":"litres",
             "limit": 20
           }

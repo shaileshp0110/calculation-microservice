@@ -27,8 +27,8 @@ Apart from /cigaretterrps and /calculate, all endpoints return static data from 
 
 {"arrivingfrom": "USA","items":[{"commoditycode":"22041000","volume":10.00,"value":100.00,"valuecurrency":"TRY", "abv":0.15,"origin":"TR"},
 {"commoditycode":"22030000","volume":10.00,"value":20.00,"abv":0.08},
-{"commoditycode":"24022000","quantity":1000,"rrp":0.48,"value":480.00 },
-{"commoditycode":"24021000","commoditycodequalifier":"cigars","value":1320,"valuecurrency":"USD","weight":500,"quantity":55,"origin":"CU"},
+{"commoditycode":"24022000","quantity":200,"rrp":0.48,"value":96.00 },
+{"commoditycode":"24021000","commoditycodequalifier":"cigars","value":200,"valuecurrency":"USD","weight":100,"quantity":10,"origin":"CU"},
 {"commoditycode":"24031000","commoditycodequalifier":"handrolling","weight":500, "value":31.45,"valuecurrency":"USD", "origin":"USA"},
 {"commoditycode":"24031000","commoditycodequalifier":"other","weight":500, "value":31.45,"valuecurrency":"USD", "origin":"USA"}]}
 
@@ -38,9 +38,9 @@ The above declaration is for a passenger arriving from the USA:
 
 10 litres of high strength beer, for which £20 was paid
 
-1000 cigarettes, with a recommended retail price of £0.48 per cigarette, and for which £480 was paid
+200 cigarettes, with a recommended retail price of £0.48 per cigarette, and for which £96 was paid
 
-50 cigars, each weighing 10g, imported from Cuba, for which USD 1320 was paid. (Duty on cigars is calculated by weight, but allowances are expressed in number of units)
+10 cigars, each weighing 10g, imported from Cuba, for which USD 200 was paid. (Duty on cigars is calculated by weight, but allowances are expressed in number of units)
 
 500g of handrolling tobacco, imported from USA, for which USD 31.45 was paid
 
