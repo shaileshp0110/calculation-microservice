@@ -114,11 +114,17 @@ nconf.defaults(
             "description":"other, non-excisable goods, when arriving by private boat or plane",
             "unit":"ad valorum",
             "limit": 270
-            },
+          },
           "other":{
             "description":"other, non-excisable goods",
             "unit": "ad valorum",
             "limit": 390
+          },
+          "aggregate":{
+            "description":"Aggregate duty rate to apply where value of goods exceeds the regular allowance",
+            "type":"ad valorum",
+            "rate": 0.23,
+            "limit": 630
           }
           
 
@@ -202,9 +208,14 @@ nconf.defaults(
       {"commodityCode":"24021000","name":"Cigars","description":"Cigars, cheroots and cigarillos containing tobacco"},
       {"commodityCode":"24022000","name":"Cigarettes","description":"Cigarettes containing tobacco"},
       {"commodityCode":"24031000","name":"Tobacco","description":"Smoking Tobacco"},
-      {"commodityCode":"24039910","name":"Chewing Tobacco","description":"Chewing Tobacco"}
-
-
+      {"commodityCode":"24039910","name":"Chewing Tobacco","description":"Chewing Tobacco"},
+      {"commoditycode":"62000000","name":"Clothing","description":"Articles of apparel and clothing accessories"},
+      {"commoditycode":"85000000","name":"Electricals and Electronics","description":"Electrical Machinery and equipment, and parts thereof"},
+      {"commoditycode":"71170000","name":"Imitation Jewellery","description":"Imitation Jewellery"},
+      {"commoditycode":"71130000","name":"Jewellery","description":"Articles of jewellery, and parts thereof, of precious metal or of metal clad with precious metal"},
+      {"commoditycode":"91010000","name":"Watches","description":"Wristwatches, pocket-watches and other watches"},
+      {"commoditycode":"84710000","name":"Computers","description":"Automatic data processing machines"},
+      {"commoditycode":"85171200","name":"Mobile Phones","description":"Telephones for cellular networks or for other wireless networks"}
 
     ],
     "countries":[

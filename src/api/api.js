@@ -42,13 +42,10 @@ const setupAPI = (app) => {
   })
   app.post('/calculate', (req, res, next) => {
     calculator.convert(req.body.items).then(conversionResults =>{       //do any necessary conversions to the customs value of the items
-      calculator.allocateAllowances(req.body.arrivingfrom, conversionResults).then(itemsAndAllowances =>{
+      calculator.allocateAllowances(req.body.arrivingfrom,req.body.arrivingfromqualifier, conversionResults).then(itemsAndAllowances =>{
         res.status(status.OK).json(itemsAndAllowances)
       })
-      /*calculator.calculate(conversionResults).then(calculationResults =>{
-          res.status(status.OK).json(calculationResults)
-        })
-      */
+     
     })
     .catch(next)
         

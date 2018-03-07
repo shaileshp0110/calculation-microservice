@@ -22,6 +22,9 @@ const measures = [
   "rate":0.2,
   "unit":"%",
   "series":3,
+  "conditions": request => {
+    if((request.commoditycode == "62000000")&&(request.commoditycodequalifier == "children"))return(false); else return(true)
+  },
   "calculation": (calculation,request, duty) => {
      return(new Promise ((resolve,reject) =>{
 
@@ -711,6 +714,178 @@ const measures = [
 
   }
 
+},
+{
+  "commoditycode":"62[0-9]{6}",
+  "taxtype":"import",
+  "taxtypecode":"",
+  "shortdescription":"Clothing Import Duty",
+  "description":"Clothing 3rd Country Import Duty",
+  "ratetype":"ad valorem",
+  "rate":0.12,
+  "unit":"%",
+  "series":2,
+  "conditions": (request) => {
+    return(!isEUMember(request.origin))
+  },
+  "calculation": (calculation, request, duty) => {
+    return(new Promise ((resolve, reject) => {
+      const dutyVal = request.customsvalue  * duty.rate 
+        calculation.import.total += dutyVal
+        calculation.total += dutyVal
+
+         let element = {
+          "taxtype": duty.taxtype,
+          "taxtypecode": duty.taxtypecode,
+          "description": duty.shortdescription,
+          "rate": (duty.rate * 100)+duty.unit,
+          "value": dutyVal
+        }
+        resolve(element)
+
+     
+      
+    }))
+      
+  }
+
+},
+{
+  "commoditycode":"85[0-9]{6}",
+  "taxtype":"import",
+  "taxtypecode":"",
+  "shortdescription":"Electrical and Electronic Goods Import Duty",
+  "description":"Electrical and Electronic Goods 3rd Country Import Duty",
+  "ratetype":"ad valorem",
+  "rate":0.045,
+  "unit":"%",
+  "series":2,
+  "conditions": (request) => {
+    return(!isEUMember(request.origin))
+  },
+  "calculation": (calculation, request, duty) => {
+    return(new Promise ((resolve, reject) => {
+      const dutyVal = request.customsvalue  * duty.rate 
+        calculation.import.total += dutyVal
+        calculation.total += dutyVal
+
+         let element = {
+          "taxtype": duty.taxtype,
+          "taxtypecode": duty.taxtypecode,
+          "description": duty.shortdescription,
+          "rate": (duty.rate * 100)+duty.unit,
+          "value": dutyVal
+        }
+        resolve(element)
+
+     
+      
+    }))
+      
+  }
+
+},
+{
+  "commoditycode":"7117[0-9]{4}",
+  "taxtype":"import",
+  "taxtypecode":"",
+  "shortdescription":"Imitation Jewellery Import Duty",
+  "description":"Imitation Jewellery 3rd Country Import Duty",
+  "ratetype":"ad valorem",
+  "rate":0.04,
+  "unit":"%",
+  "series":2,
+  "conditions": (request) => {
+    return(!isEUMember(request.origin))
+  },
+  "calculation": (calculation, request, duty) => {
+    return(new Promise ((resolve, reject) => {
+      const dutyVal = request.customsvalue  * duty.rate 
+        calculation.import.total += dutyVal
+        calculation.total += dutyVal
+
+         let element = {
+          "taxtype": duty.taxtype,
+          "taxtypecode": duty.taxtypecode,
+          "description": duty.shortdescription,
+          "rate": (duty.rate * 100)+duty.unit,
+          "value": dutyVal
+        }
+        resolve(element)
+
+     
+      
+    }))
+      
+  }
+},
+{
+  "commoditycode":"7113[0-9]{4}",
+  "taxtype":"import",
+  "taxtypecode":"",
+  "shortdescription":"Jewellery Import Duty",
+  "description":"Jewellery 3rd Country Import Duty",
+  "ratetype":"ad valorem",
+  "rate":0.025,
+  "unit":"%",
+  "series":2,
+  "conditions": (request) => {
+    return(!isEUMember(request.origin))
+  },
+  "calculation": (calculation, request, duty) => {
+    return(new Promise ((resolve, reject) => {
+      const dutyVal = request.customsvalue  * duty.rate 
+        calculation.import.total += dutyVal
+        calculation.total += dutyVal
+
+         let element = {
+          "taxtype": duty.taxtype,
+          "taxtypecode": duty.taxtypecode,
+          "description": duty.shortdescription,
+          "rate": (duty.rate * 100)+duty.unit,
+          "value": dutyVal
+        }
+        resolve(element)
+
+     
+      
+    }))
+      
+  }
+},
+{
+  "commoditycode":"9101[0-9]{4}",
+  "taxtype":"import",
+  "taxtypecode":"",
+  "shortdescription":"Watches Import Duty",
+  "description":"Watches 3rd Country Import Duty",
+  "ratetype":"ad valorem",
+  "rate":0.045,
+  "unit":"%",
+  "series":2,
+  "conditions": (request) => {
+    return(!isEUMember(request.origin))
+  },
+  "calculation": (calculation, request, duty) => {
+    return(new Promise ((resolve, reject) => {
+      const dutyVal = request.customsvalue  * duty.rate 
+        calculation.import.total += dutyVal
+        calculation.total += dutyVal
+
+         let element = {
+          "taxtype": duty.taxtype,
+          "taxtypecode": duty.taxtypecode,
+          "description": duty.shortdescription,
+          "rate": (duty.rate * 100)+duty.unit,
+          "value": dutyVal
+        }
+        resolve(element)
+
+     
+      
+    }))
+      
+  }
 }
 
 ]

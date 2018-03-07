@@ -45,7 +45,7 @@ const applyConversion = (calculationRequest => {
         resolve(calculationRequest)
       })
       .catch(error =>{
-        logger.error(error)
+        logger.error(JSON.stringify(error))
       })
     }
 
@@ -53,7 +53,7 @@ const applyConversion = (calculationRequest => {
 
 })
 
-const allocateAllowances = (countryCode, items) => {
+const allocateAllowances = (countryCode,qualifier, items) => {
   return(new Promise((resolve, reject) =>{
     const allocatedAllowances={
         
@@ -82,18 +82,29 @@ const allocateAllowances = (countryCode, items) => {
 
       allowances.getAllowances(allowancesCode).then(allAllowances => {
         allRegionAllowances = allAllowances
-        return allocateTobaccoAllowances(allowancesCode,allRegionAllowances,tobaccoItems,allowancesCode)
+        return allocateTobaccoAllowances(allRegionAllowances,tobaccoItems,allowancesCode)
 
       })
       .then(allocatedTobaccoAllowances =>{
        
         allocatedAllowances["tobacco"] = allocatedTobaccoAllowances
 
-        return allocateAlcoholAllowances(allowancesCode, allRegionAllowances, alcoholItems,allowancesCode)
+        return allocateAlcoholAllowances(allRegionAllowances, alcoholItems,allowancesCode)
         
       })
       .then(allocatedAlcoholAllowances => {
         allocatedAllowances["alcohol"] = allocatedAlcoholAllowances
+
+        if(typeof qualifier == 'undefined'){
+          qualifier = "other"
+        }
+
+        return allocateOtherAllowances(allRegionAllowances, otherItems, allowancesCode,qualifier)
+        
+      })
+      .then(allocatedOtherAllowances =>{
+        allocatedAllowances['other'] = allocatedOtherAllowances
+
         resolve(allocatedAllowances)
       })
       .catch(error => {
@@ -103,13 +114,18 @@ const allocateAllowances = (countryCode, items) => {
   }))
 }
 
-const allocateTobaccoAllowances = (allowancesCode,regionAllowances,items,regionCode) =>{
+const allocateTobaccoAllowances = (regionAllowances,items,regionCode) =>{
   //logger.info("Regionalallowances: " + JSON.stringify(regionAllowances.tobacco))
   return(new Promise((resolve, reject) => {
     let returnedObject ={
       "allowances":[],
 
 
+    }
+
+    if(items.length == 0){
+      resolve({})
+      return
     }
 
     let split = false                 //split will be true if we need to split allowances across the categories (i.e. passenger is ROW)
@@ -224,8 +240,8 @@ const allocateTobaccoAllowances = (allowancesCode,regionAllowances,items,regionC
            delete allowance.currencyconversion
            delete allowance.dutyperunit
            delete allowance.allowance
-           delete allowance.savingagainstallowance
-           delete allowance.claimagainstallowance
+           //delete allowance.savingagainstallowance
+           //delete allowance.claimagainstallowance
 
            delete declaration.customsvalue
            delete declaration.currencyconversion
@@ -277,7 +293,136 @@ const allocateTobaccoAllowances = (allowancesCode,regionAllowances,items,regionC
     })
   }))
 }
+
+/* Allocate 'other goods' items as either allowances or declarations
+EU:
+everything is in 'allowances' - there are no limits
+
+ROW : 
+Only one item - if it is below the allowance, add to 'allowances', if it is above the allowance
+the item goes in to 'declarations'
+
+More than one item, split the items in to 'allowances' and 'declarations' according to the limits
+*/
+const allocateOtherAllowances = (regionAllowances, items, regionCode, qualifier) => {
+  return(new Promise((resolve, reject) =>{
+    let returnedObject ={
+      "allowances":[]
+    }
+
+     if(items.length == 0){
+      resolve({})
+      return
+    }
+
+   
+
+    if(regionCode == "EU"){ //There are no limits on other goods within the EU
+      returnedObject.allowances = items
+      returnedObject.declarations=[]
+      resolve(returnedObject)   //everything is returned in 'allowances'
+      return
+
+    }
+
+    let limitRemaining = regionAllowances['other'][qualifier].limit
+   
+
+    let declarations = []
+    calculate(items).then(calculations => { //calculate the duty due on each item
+
+      calculations.forEach(calculation =>{  //work out the duties/unit for each item, and get the allowances
+      
+          calculation.request.dutyperunit = calculation.total / calculation.request.quantity
   
+      })
+       
+      calculations.sort((a,b) =>{
+              if(a.request.dutyperunit > b.request.dutyperunit) return -1
+              if(b.request.dutyperunit > a.request.dutyperunit) return 1
+              return 0
+      })
+
+
+
+      do{
+
+        let currentCalculation = calculations[0]
+        let noOfUnitsToAllow = Math.floor(limitRemaining / (currentCalculation.request.customsvalue /currentCalculation.request.quantity))
+        
+        if(noOfUnitsToAllow > currentCalculation.request.quantity){ //we're allowed more than we actually have
+            noOfUnitsToAllow = currentCalculation.request.quantity //adjust accordingly - add all to allowance
+        }
+        limitRemaining -= (noOfUnitsToAllow * (currentCalculation.request.customsvalue /currentCalculation.request.quantity))
+        let allowance = Object.assign({},calculations[0].request)
+        let declaration = Object.assign({},calculations[0].request)
+        if(noOfUnitsToAllow > 0){
+            if(noOfUnitsToAllow < currentCalculation.request.quantity){ //need to split in to allowance/declare
+              
+              //adjust the allowance
+              allowance.quantity =  noOfUnitsToAllow
+              allowance.value = noOfUnitsToAllow * (currentCalculation.request.value / currentCalculation.request.quantity)
+            
+              //adjust declaration
+              declaration.quantity -=  allowance.quantity
+              declaration.value-= allowance.value 
+
+              if(allowance.quantity > 0){
+                delete allowance.customsvalue
+                delete allowance.currencyconversion
+                delete allowance.dutyperunit
+                returnedObject.allowances.push(allowance)
+              }
+              if(declaration.quantity > 0){
+                delete declaration.customsvalue
+                delete declaration.currencyconversion
+                delete declaration.dutyperunit
+
+                declarations.push(declaration)
+              }
+            }
+            else{   //use the whole request in allowance
+              delete allowance.customsvalue
+              delete allowance.currencyconversion
+              delete allowance.dutyperunit
+              returnedObject.allowances.push(allowance)
+
+            }
+        }
+        else{ //can't fit this in to our allowance
+          delete declaration.customsvalue
+          delete declaration.currencyconversion
+          delete declaration.dutyperunit
+
+            declarations.push(declaration)
+        }
+
+
+
+        calculations.shift()
+
+      }while((limitRemaining > 0)&&(calculations.length > 0))
+
+      convert(declarations)
+      .then(conversionResults =>{
+        return( calculate(conversionResults))
+      })
+      .then(calculationResults =>{
+        returnedObject.declarations = calculationResults
+        resolve(returnedObject)
+      })
+      .catch( error =>{
+        logger.error(error)
+      })
+
+
+      
+    })
+
+
+  }))
+}
+ 
 
 const getItemLimit = (commoditycode,commoditycodequalifier,allowances) => {
   for(let a in allowances){
@@ -327,12 +472,18 @@ const getItemAllowanceCategory = (commoditycode,commoditycodequalifier,allowance
 
 }
 
-const allocateAlcoholAllowances = (allowancesCode, regionAllowances, items, regionCode) =>{
+const allocateAlcoholAllowances = (regionAllowances, items, regionCode) =>{
   return(new Promise((resolve, reject) =>{
     let returnedObject ={
       "allowances":[],
       "declarations":[]
     }
+
+    if(items.length == 0){
+      resolve({})
+      return
+    }
+
     let split = false                 //split will be true if we need to split allowances across the categories (i.e. passenger is ROW)
     if(regionCode == "ROW")split=true
 
@@ -564,7 +715,7 @@ const applyMeasures = (matchingmeasures, request) => {
           calculation.excise.elements = elements
               //filter measures to produce an array of matching measures which have either no conditions, or conditions which are met w.r.t the current request
           let vatMeasures = matchingmeasures.filter(measure => measure.taxtype === 'VAT')
-                                          .filter(measure => typeof(measure.conditions) === 'undefined'||measure.conditions.apply(null,[calculation,request,measure]))
+                                          .filter(measure => typeof(measure.conditions) === 'undefined'||measure.conditions.call(null,request))
 
           vatMeasures = vatMeasures.sort((a,b) =>{
             if(a.series < b.series)return(-1)
