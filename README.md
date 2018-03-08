@@ -23,14 +23,17 @@ Apart from /cigaretterrps and /calculate, all endpoints return static data from 
 
 /cigaretterrps scrapes a price comparison website to return current prices for cigarette products, broken down by brand
 
-/calculate takes a JSON object as an argument such as:
+/calculate takes a JSON object as an argument such as (example with excise goods exclusively:
 
-{"arrivingfrom": "USA","items":[{"commoditycode":"22041000","volume":10.00,"value":100.00,"valuecurrency":"TRY", "abv":0.15,"origin":"TR"},
+{"arrivingfrom": "USA",
+"items":[
+{"commoditycode":"22041000","volume":10.00,"value":100.00,"valuecurrency":"TRY", "abv":0.15,"origin":"TR"},
 {"commoditycode":"22030000","volume":10.00,"value":20.00,"abv":0.08},
 {"commoditycode":"24022000","quantity":200,"rrp":0.48,"value":96.00 },
 {"commoditycode":"24021000","commoditycodequalifier":"cigars","value":200,"valuecurrency":"USD","weight":100,"quantity":10,"origin":"CU"},
 {"commoditycode":"24031000","commoditycodequalifier":"handrolling","weight":500, "value":31.45,"valuecurrency":"USD", "origin":"USA"},
-{"commoditycode":"24031000","commoditycodequalifier":"other","weight":500, "value":31.45,"valuecurrency":"USD", "origin":"USA"}]}
+{"commoditycode":"24031000","commoditycodequalifier":"other","weight":500, "value":31.45,"valuecurrency":"USD", "origin":"USA"}
+]}
 
 The above declaration is for a passenger arriving from the USA:
 
@@ -46,9 +49,44 @@ The above declaration is for a passenger arriving from the USA:
 
 500g of 'other' smoking tobacco, imported from USA, for which USD 31.45 was paid
 
+Another example ('other' goods only):
+
+{"arrivingfrom": "USA","arrivingfromqualifier":"private",
+"items":[
+  {"commoditycode":"62000000","commoditycodequalifier":"children","value":500.00,"valuecurrency":"USD","quantity": 10},
+  {"commoditycode":"62000000","value":500.00,"valuecurrency":"USD","quantity": 10},
+  {"commoditycode":"84710000","value":200.00,"valuecurrency":"USD","quantity":1},
+  {"commoditycode":"85000000","value":100.00,"valuecurrency":"USD","quantity":1},
+  {"commoditycode":"71170000","value":20.00,"valuecurrency":"USD","quantity":3},
+  {"commoditycode":"71130000","value":150.00,"valuecurrency":"USD","quantity":1},
+  {"commoditycode":"91010000","value":400.00,"valuecurrency":"USD","quantity":1},
+  {"commoditycode":"85171200","value":250.00,"valuecurrency":"USD","quantity":1}
+]}
+
+The above example is for a passenger ariving from the USA, arriving via private boat or aircraft:
+
+$500 worth of children's clothes (made up of 10 individual items)
+
+$500 worth of clothing (not children's), made up of 10 individual items
+
+A Tablet computer, costing $200
+
+An electrical or electronic item worth $100
+
+Three Imitation jewellery items worth $20
+
+A Jewellery item worth $150
+
+A watch costing $400
+
+A mobile phone costing $250
+
+
 
 
 'arrivingfrom' is the country code of the country from which the passenger is arriving
+
+'arrivingfromqualifier' can denote either the mens by which the passenger is arriving (e.g. 'private', for passengers arriving by private boat or plane - which has different allowances), or details some special case of departure point (e.g Canary Islands)
 
 'items' is the list of items that the passenger is importing
 
@@ -70,7 +108,7 @@ The above declaration is for a passenger arriving from the USA:
 
  'weight' is the weight of product to be declared - used for cigars and loose tobacco products, for example
 
- 'origin' is the country code of the origin of the product (one of the coutry codes as returned by the /countries endpoint)
+ 'origin' is the country code of the origin of the product (one of the country codes as returned by the /countries endpoint)
 
 
 The application is a Node/Express server, running on port 3030 by default (configurable through the config file)
