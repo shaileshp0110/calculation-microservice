@@ -14,6 +14,47 @@ const isEUMember = (country) => {
 const measures = [
 {
   "commoditycode":"[0-9]{8}",
+  "taxtype":"aggregate",
+  "taxtypecode":"",
+  "short description":"Aggregate 23% Rate",
+  "description": "Aggregate 23% Import Duty/VAT Rate for non-excisable goods",
+  "ratetype":"ad valorum",
+  "rate":0.23,
+  "unit":"%",
+  "series":3,
+  "conditions": request => { //Only apply to non-excisable goods
+    const alcoholRegex = new RegExp("^22[0-9]{6}$")
+    const tobaccoRegex = new RegExp("^24[0-9]{6}$")
+
+    let aMatch = request.commoditycode.match(alcoholRegex)
+    let tMatch = request.commoditycode.match(tobaccoRegex)
+    if(aMatch && (aMatch[0] !== "")) return(false)
+    if(tMatch && (tMatch[0] !== "")) return(false)
+    return(true)
+           
+  },
+  "calculation": (calculation,request, duty) => {
+     return(new Promise ((resolve,reject) =>{
+
+      const dutyTotal = duty.rate * request.customsvalue
+      calculation.aggregate.total = dutyTotal
+       let element = {
+        "taxtype": duty.taxtype,
+        "taxtypecode": duty.taxtypecode,
+        "description": duty.shortdescription,
+        "rate":  (duty.rate * 100) + duty.unit,
+        "value": dutyTotal
+      }
+      resolve(element)
+
+    }))
+    
+  }
+
+    
+},
+{
+  "commoditycode":"[0-9]{8}",
   "taxtype":"VAT",
   "taxtypecode":"",
   "short description":"UK VAT Standard Rate",

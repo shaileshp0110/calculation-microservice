@@ -280,6 +280,9 @@ const allocateTobaccoAllowances = (regionAllowances,items,regionCode) =>{
       })
       .then(calculationResults =>{
         returnedObject.declarations = calculationResults
+        returnedObject.totals={
+          "allduties": addAllDuties(calculationResults)
+        }
         resolve(returnedObject)
       })
       .catch( error =>{
@@ -409,6 +412,11 @@ const allocateOtherAllowances = (regionAllowances, items, regionCode, qualifier)
       })
       .then(calculationResults =>{
         returnedObject.declarations = calculationResults
+        returnedObject.totals={
+          "customsvalue":addAllCustomsValues(calculationResults),
+          "allduties": addAllDuties(calculationResults),
+          "aggregateduties": addAggregateDuties(calculationResults)
+        }
         resolve(returnedObject)
       })
       .catch( error =>{
@@ -421,6 +429,31 @@ const allocateOtherAllowances = (regionAllowances, items, regionCode, qualifier)
 
 
   }))
+}
+
+
+const addAllDuties = (calculationResults) =>{
+  let total = 0.0
+  calculationResults.forEach(calculation => {
+    total+= calculation.total
+  })
+  return(total)
+}
+
+const addAggregateDuties = (calculationResults) =>{
+  let total = 0.0
+  calculationResults.forEach(calculation => {
+    total+= calculation.aggregate.total
+  })
+  return(total)
+}
+
+const addAllCustomsValues = (calculationResults) =>{
+  let total = 0.0
+  calculationResults.forEach(calculation => {
+    total+= calculation.request.customsvalue
+  })
+  return(total)
 }
  
 
@@ -607,6 +640,9 @@ const allocateAlcoholAllowances = (regionAllowances, items, regionCode) =>{
       })
       .then(calculationResults =>{
         returnedObject.declarations = calculationResults
+        returnedObject.totals={
+          "allduties": addAllDuties(calculationResults),
+        }
         resolve(returnedObject)
       })
       .catch( error =>{
@@ -669,7 +705,11 @@ const applyMeasures = (matchingmeasures, request) => {
             "total":0.0,
             "elements":[]
           },
-          "total": 0.0
+          "total": 0.0,
+          "aggregate":{
+            "total":0,
+            "elements":[]
+          }
 
       }
 
@@ -734,7 +774,24 @@ const applyMeasures = (matchingmeasures, request) => {
         
           Promise.all(appliedVATCalculations).then(elements =>{
             calculation.vat.elements = elements
-            resolve(calculation)
+
+      
+            let aggregateMeasures = matchingmeasures.filter(measure => measure.taxtype === 'aggregate')
+                                          .filter(measure => measure.conditions.call(null,request))
+
+    
+            const appliedAggregateCalculations = aggregateMeasures.map(aggregateMeasure => {
+              return(aggregateMeasure.calculation.call(null,calculation, request, aggregateMeasure))
+
+            })
+
+            Promise.all(appliedAggregateCalculations).then(elements =>{
+              calculation.aggregate.elements = elements
+              resolve(calculation)
+            })
+
+
+            
           })
 
           
