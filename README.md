@@ -31,8 +31,8 @@ Apart from /cigaretterrps and /calculate, all endpoints return static data from 
 {"commoditycode":"22030000","volume":10.00,"value":20.00,"abv":0.08},
 {"commoditycode":"24022000","quantity":200,"rrp":0.48,"value":96.00 },
 {"commoditycode":"24021000","commoditycodequalifier":"cigars","value":200,"valuecurrency":"USD","weight":100,"quantity":10,"origin":"CU"},
-{"commoditycode":"24031000","commoditycodequalifier":"handrolling","weight":500, "value":31.45,"valuecurrency":"USD", "origin":"USA"},
-{"commoditycode":"24031000","commoditycodequalifier":"other","weight":500, "value":31.45,"valuecurrency":"USD", "origin":"USA"}
+{"commoditycode":"24031000","commoditycodequalifier":"handrolling","weight":500, "value":31.45,"valuecurrency":"USD", "origin":"US"},
+{"commoditycode":"24031000","commoditycodequalifier":"other","weight":500, "value":31.45,"valuecurrency":"USD", "origin":"US"}
 ]}
 
 The above declaration is for a passenger arriving from the USA:
@@ -51,7 +51,7 @@ The above declaration is for a passenger arriving from the USA:
 
 Another example ('other' goods only):
 
-{"arrivingfrom": "USA","arrivingfromqualifier":"private",
+{"arrivingfrom": "US","arrivingfromqualifier":"private",
 "items":[
   {"commoditycode":"62000000","commoditycodequalifier":"children","value":500.00,"valuecurrency":"USD","quantity": 10},
   {"commoditycode":"62000000","value":500.00,"valuecurrency":"USD","quantity": 10},
