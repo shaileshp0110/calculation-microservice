@@ -49,6 +49,14 @@
                 }
               },
             "then":{"required": ["quantity"]}
+            },
+            {
+              "if":{
+                "properties":{
+                  "commoditycode":{"enum":["22030000","22040000","22041000","22041000","22042000","22060000","22050000","22080000"]}
+                }
+              },
+            "then":{"required": ["abv"]}
             }
           ],
           "properties":{  
