@@ -26,7 +26,7 @@ const convert = (calculationRequests) => {
 
 }
 
-const applyConversion = (calculationRequest => {
+const applyConversion = calculationRequest => {
   return(new Promise((resolve, reject) => {
     if(typeof calculationRequest.valuecurrency == 'undefined'){ //no source currency - assumed GBP, customs value is entered value
       calculationRequest.valuecurrency = "GBP"
@@ -51,7 +51,7 @@ const applyConversion = (calculationRequest => {
 
   }))
 
-})
+}
 
 const allocateAllowances = (countryCode,qualifier, items) => {
   return(new Promise((resolve, reject) =>{
@@ -82,14 +82,14 @@ const allocateAllowances = (countryCode,qualifier, items) => {
 
       allowances.getAllowances(allowancesCode).then(allAllowances => {
         allRegionAllowances = allAllowances
-        return allocateTobaccoAllowances(allRegionAllowances,tobaccoItems,allowancesCode)
+        return allocateTobaccoAllowances(allRegionAllowances,tobaccoItems,allowancesCode,countryCode)
 
       })
       .then(allocatedTobaccoAllowances =>{
        
         allocatedAllowances["tobacco"] = allocatedTobaccoAllowances
 
-        return allocateAlcoholAllowances(allRegionAllowances, alcoholItems,allowancesCode)
+        return allocateAlcoholAllowances(allRegionAllowances, alcoholItems,allowancesCode,countryCode)
         
       })
       .then(allocatedAlcoholAllowances => {
@@ -99,7 +99,7 @@ const allocateAllowances = (countryCode,qualifier, items) => {
           qualifier = "other"
         }
 
-        return allocateOtherAllowances(allRegionAllowances, otherItems, allowancesCode,qualifier)
+        return allocateOtherAllowances(allRegionAllowances, otherItems, allowancesCode,qualifier,countryCode)
         
       })
       .then(allocatedOtherAllowances =>{
@@ -114,7 +114,7 @@ const allocateAllowances = (countryCode,qualifier, items) => {
   }))
 }
 
-const allocateTobaccoAllowances = (regionAllowances,items,regionCode) =>{
+const allocateTobaccoAllowances = (regionAllowances,items,regionCode,countryCode) =>{
   //logger.info("Regionalallowances: " + JSON.stringify(regionAllowances.tobacco))
   return(new Promise((resolve, reject) => {
     let returnedObject ={
@@ -211,8 +211,14 @@ const allocateTobaccoAllowances = (regionAllowances,items,regionCode) =>{
             
 
            let allowance = Object.assign({},calculations[0].request)
+
            let declaration = Object.assign({},calculations[0].request)
-           
+
+           //Inherit origin, if it is not provided
+           if(typeof calculations[0].request.origin == 'undefined'){
+              allowance.origin = countryCode
+              declaration.origin = countryCode
+           }
 
            if(typeof allowance.quantity !== 'undefined'){
 
@@ -307,7 +313,7 @@ the item goes in to 'declarations'
 
 More than one item, split the items in to 'allowances' and 'declarations' according to the limits
 */
-const allocateOtherAllowances = (regionAllowances, items, regionCode, qualifier) => {
+const allocateOtherAllowances = (regionAllowances, items, regionCode, qualifier, countryCode) => {
   return(new Promise((resolve, reject) =>{
     let returnedObject ={
       "allowances":[]
@@ -359,6 +365,11 @@ const allocateOtherAllowances = (regionAllowances, items, regionCode, qualifier)
         limitRemaining -= (noOfUnitsToAllow * (currentCalculation.request.customsvalue /currentCalculation.request.quantity))
         let allowance = Object.assign({},calculations[0].request)
         let declaration = Object.assign({},calculations[0].request)
+        //Inherit origin, if it is not provided
+         if(typeof calculations[0].request.origin == 'undefined'){
+            allowance.origin = countryCode
+            declaration.origin = countryCode
+         }
         if(noOfUnitsToAllow > 0){
             if(noOfUnitsToAllow < currentCalculation.request.quantity){ //need to split in to allowance/declare
               
@@ -505,7 +516,7 @@ const getItemAllowanceCategory = (commoditycode,commoditycodequalifier,allowance
 
 }
 
-const allocateAlcoholAllowances = (regionAllowances, items, regionCode) =>{
+const allocateAlcoholAllowances = (regionAllowances, items, regionCode, countryCode) =>{
   return(new Promise((resolve, reject) =>{
     let returnedObject ={
       "allowances":[],
@@ -590,6 +601,11 @@ const allocateAlcoholAllowances = (regionAllowances, items, regionCode) =>{
 
             let allowance = Object.assign({},calculations[0].request)
             let declaration = Object.assign({},calculations[0].request)
+            //Inherit origin, if it is not provided
+           if(typeof calculations[0].request.origin == 'undefined'){
+              allowance.origin = countryCode
+              declaration.origin = countryCode
+           }
 
             allowance.volume = allowance.claimagainstallowance //adjust volumes
             declaration.volume = declaration.volume - allowance.claimagainstallowance //subtract allowance volume from what will be declared

@@ -1,0 +1,28 @@
+#%RAML 1.0
+---
+
+title: Calculation Service
+version: 1.0
+protocols: [ HTTPS ]
+baseUri: https://api.service.hmrc.gov.uk/calculation
+
+documentation:
+  - title: Overview
+    content: !include docs/overview.md
+
+mediaType: [ application/json ]
+
+/calculate:
+  post:
+    displayName: Submit Calculation
+    description: This resource returns a calculation based on a set of submitted items. The endpoint returns a list of allowances and a calculation of the duties due on all of the items that are above the user's allowances
+    body:
+      application/json:
+        type: !include schemas/calculateRequest.json
+        example: !include examples/calculateRequestExample.json
+        responses:
+          200:
+            body:
+              application/json:
+                type: !include schemas/calculateResponse.json
+                example: !include examples/calculateResponseExample.json
