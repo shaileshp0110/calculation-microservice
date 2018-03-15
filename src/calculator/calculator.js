@@ -3,7 +3,7 @@
 const nconf = require('../config/conf.js').nconf
 const logger = require('../logger/log.js').logger
 
-const measures = require('./measures.js').measures
+const measures = require(nconf.get('measurespath')).measures
 const converter = require('../exchangeRateWrapper/erWrapper.js')
 const allowances = require('../allowancesWrapper/allowanceswrapper.js')
 

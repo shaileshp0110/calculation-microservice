@@ -1,0 +1,32 @@
+{"$schema":"http://json-schema.org/draft-07/schema#",
+  "id":"cigaretterrpsresponse.json",
+  "type": "array",
+   "items":{"$ref":"#/definitions/brand"},
+   "definitions":{
+     "brand":{
+       "type":"object",
+       "properties":{
+            "brand":{
+              "type":"string"
+            },
+            "products":{
+              "type":"array",
+              "items":{"$ref":"#/definitions/product"}
+            }
+          
+       }
+      },
+      "product":{
+        "type":"object",
+        "properties":{
+          "product":{
+            "type":"string"
+          },
+          "price":{
+            "type":"number"
+          }
+        }
+      }
+    }
+  
+}

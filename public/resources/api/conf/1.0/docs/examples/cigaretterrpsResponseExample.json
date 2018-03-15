@@ -1,0 +1,478 @@
+[
+    {
+        "brand": "Benson And Hedges",
+        "products": [
+            {
+                "product": "Benson & Hedges Blue Superkings Cigarettes ",
+                "price": 0.38
+            },
+            {
+                "product": "Benson & Hedges Blue Cigarettes ",
+                "price": 0.38
+            },
+            {
+                "product": "Benson & Hedges Sky Blue Superking Cigarettes ",
+                "price": 0.38
+            },
+            {
+                "product": "Benson & Hedges Sovereign Blue Kingsize Cigarettes ",
+                "price": 0.38
+            },
+            {
+                "product": "Benson & Hedges Silver Flip Top Cigarettes ",
+                "price": 0.48
+            },
+            {
+                "product": "Benson & Hedges Sky Blue King Size Cigarettes ",
+                "price": 0.38
+            },
+            {
+                "product": "Benson & Hedges Sovereign Dual King Size Cigarettes ",
+                "price": 0.38
+            },
+            {
+                "product": "Benson & Hedges Sovereign Superkings Blue Cigarettes ",
+                "price": 0.38
+            },
+            {
+                "product": "Benson & Hedges Gold 100's Cigarettes ",
+                "price": 0.54
+            },
+            {
+                "product": "Benson & Hedges Sovereign Superkings Green ",
+                "price": 0.38
+            },
+            {
+                "product": "Benson & Hedges Sovereign Sky Blue King Size Cigarettes ",
+                "price": 0.38
+            },
+            {
+                "product": "Benson & Hedges Gold King Size Cigarettes ",
+                "price": 0.55
+            },
+            {
+                "product": "Benson & Hedges Sovereign Black King Size Cigarettes ",
+                "price": 0.48
+            },
+            {
+                "product": "Benson & Hedges Dual ",
+                "price": 0.48
+            }
+        ]
+    },
+    {
+        "brand": "Berkeley",
+        "products": [
+            {
+                "product": "Berkeley Superkings Cigarettes ",
+                "price": 0.45
+            },
+            {
+                "product": "Berkeley King Size Cigarettes ",
+                "price": 0.42
+            },
+            {
+                "product": "Berkeley Superkings Blue Cigarettes ",
+                "price": 0.45
+            },
+            {
+                "product": "Berkeley Blue King Size Cigarettes ",
+                "price": 0.42
+            }
+        ]
+    },
+    {
+        "brand": "Camel",
+        "products": [
+            {
+                "product": "Camel Blue King Size Cigarettes ",
+                "price": 0.53
+            }
+        ]
+    },
+    {
+        "brand": "Carlton",
+        "products": [
+            {
+                "product": "Carlton Superkings Red Cigarettes ",
+                "price": 0.38
+            },
+            {
+                "product": "Carlton Superkings Bright Blue Cigarettes ",
+                "price": 0.38
+            },
+            {
+                "product": "Carlton Superkings Green ",
+                "price": 0.38
+            },
+            {
+                "product": "Carlton Bright Blue ",
+                "price": 0.38
+            },
+            {
+                "product": "Carlton Red Cigarettes ",
+                "price": 0.38
+            }
+        ]
+    },
+    {
+        "brand": "Chesterfield",
+        "products": [
+            {
+                "product": "Chesterfield Red King Size Cigarettes ",
+                "price": 0.38
+            },
+            {
+                "product": "Chesterfield Blue King Size Cigarettes ",
+                "price": 0.38
+            },
+            {
+                "product": "Chesterfield Red Superkings ",
+                "price": 0.38
+            }
+        ]
+    },
+    {
+        "brand": "Dunhill",
+        "products": [
+            {
+                "product": "Dunhill International King Size Cigarettes ",
+                "price": 0.57
+            },
+            {
+                "product": "Dunhill St Moritz Cigarettes ",
+                "price": 0.57
+            },
+            {
+                "product": "Dunhill Consulate Cigarettes ",
+                "price": 0.57
+            },
+            {
+                "product": "Dunhill Red King Size Cigarettes ",
+                "price": 0.55
+            }
+        ]
+    },
+    {
+        "brand": "Embassy",
+        "products": [
+            {
+                "product": "Embassy Number 1 Red King Size Cigarettes ",
+                "price": 0.55
+            },
+            {
+                "product": "Embassy Filter Cigarettes ",
+                "price": 0.55
+            },
+            {
+                "product": "Embassy Bright Blue King Size Cigarettes ",
+                "price": 0.55
+            }
+        ]
+    },
+    {
+        "brand": "John Player Special",
+        "products": [
+            {
+                "product": "John Player Special Bright Blue Cigarettes ",
+                "price": 0.38
+            },
+            {
+                "product": "John Player Special Bright Blue Superkings Cigarettes ",
+                "price": 0.38
+            },
+            {
+                "product": "John Player Special Players Superkings Real Red Cigarettes ",
+                "price": 0.38
+            },
+            {
+                "product": "John Player Special Player's Kingsize Crushball Cigarettes ",
+                "price": 0.38
+            },
+            {
+                "product": "John Player Special King Size Real Red Cigarettes ",
+                "price": 0.38
+            },
+            {
+                "product": "John Player Special Crushball Cigarettes ",
+                "price": 0.41
+            },
+            {
+                "product": "John Player Special Superkings Real Blue Cigarette ",
+                "price": 0.41
+            },
+            {
+                "product": "John Player Special Real Blue King Size Cigarettes ",
+                "price": 0.41
+            },
+            {
+                "product": "John Player Special Superkings Bright Silver Cigarettes ",
+                "price": 0.41
+            },
+            {
+                "product": "John Player Special Bright Silver Cigarettes ",
+                "price": 0.41
+            },
+            {
+                "product": "John Player Special Triple Flow Cigarettes ",
+                "price": 0.41
+            },
+            {
+                "product": "John Player Special Legendary Black Cigarettes ",
+                "price": 0.48
+            }
+        ]
+    },
+    {
+        "brand": "Lambert And Butler",
+        "products": [
+            {
+                "product": "Lambert & Butler King Size Real Blue Cigarettes ",
+                "price": 0.39
+            },
+            {
+                "product": "Lambert & Butler Blue Crushball King Size Cigarettes ",
+                "price": 0.39
+            },
+            {
+                "product": "Lambert & Butler Original Silver King Size Cigarettes ",
+                "price": 0.46
+            },
+            {
+                "product": "Lambert & Butler Crushball Cigarettes ",
+                "price": 0.46
+            },
+            {
+                "product": "Lambert & Butler Superkings Real Blue Cigarettes ",
+                "price": 0.39
+            },
+            {
+                "product": "Lambert & Butler King Size Bright Blue Cigarettes ",
+                "price": 0.39
+            },
+            {
+                "product": "Lambert & Butler Bright Gold Cigarettes ",
+                "price": 0.46
+            },
+            {
+                "product": "Lambert & Butler Bright Blue Superkings Cigarettes ",
+                "price": 0.39
+            }
+        ]
+    },
+    {
+        "brand": "Marlboro",
+        "products": [
+            {
+                "product": "Marlboro Touch Cigarettes ",
+                "price": 0.4
+            },
+            {
+                "product": "Marlboro Gold King Size Cigarettes ",
+                "price": 0.53
+            },
+            {
+                "product": "Marlboro Red King Size Cigarettes ",
+                "price": 0.53
+            },
+            {
+                "product": "Marlboro Silver Blue King Size Cigarettes ",
+                "price": 0.53
+            },
+            {
+                "product": "Marlboro Gold Superkings Cigarettes ",
+                "price": 0.54
+            }
+        ]
+    },
+    {
+        "brand": "Mayfair",
+        "products": [
+            {
+                "product": "Mayfair White King Size Cigarettes ",
+                "price": 0.46
+            },
+            {
+                "product": "Mayfair King Size Sky Blue Cigarettes ",
+                "price": 0.46
+            },
+            {
+                "product": "Mayfair King Size Cigarettes ",
+                "price": 0.46
+            },
+            {
+                "product": "Mayfair Superkings Cigarettes ",
+                "price": 0.45
+            },
+            {
+                "product": "Mayfair Superkings Sky Blue Cigarettes ",
+                "price": 0.45
+            }
+        ]
+    },
+    {
+        "brand": "Pall Mall",
+        "products": [
+            {
+                "product": "Pall Mall King Size Blue Capsule Cigarettes ",
+                "price": 0.39
+            },
+            {
+                "product": "Pall Mall Blue Capsule Superkings ",
+                "price": 0.39
+            },
+            {
+                "product": "Pall Mall King Size Red Capsule Cigarettes ",
+                "price": 0.39
+            },
+            {
+                "product": "Pall Mall Superkings Red Capsule Cigarettes ",
+                "price": 0.39
+            },
+            {
+                "product": "Pall Mall Silver Capsule King Size ",
+                "price": 0.39
+            }
+        ]
+    },
+    {
+        "brand": "Regal",
+        "products": [
+            {
+                "product": "Regal Blue King Size Cigarettes ",
+                "price": 0.55
+            },
+            {
+                "product": "Regal Filter Cigarettes ",
+                "price": 0.55
+            }
+        ]
+    },
+    {
+        "brand": "Richmond",
+        "products": [
+            {
+                "product": "Richmond Real Blue Superkings Cigarettes ",
+                "price": 0.45
+            },
+            {
+                "product": "Richmond Bright Blue Superkings Cigarettes ",
+                "price": 0.45
+            },
+            {
+                "product": "Richmond Real Blue King Size Cigarettes ",
+                "price": 0.46
+            },
+            {
+                "product": "Richmond Bright Blue King Size Cigarettes ",
+                "price": 0.46
+            }
+        ]
+    },
+    {
+        "brand": "Rothmans",
+        "products": [
+            {
+                "product": "Rothmans Superking Blue Cigarettes ",
+                "price": 0.38
+            },
+            {
+                "product": "Rothmans King Size Blue Cigarettes ",
+                "price": 0.38
+            },
+            {
+                "product": "Rothmans King Size Silver Cigarettes ",
+                "price": 0.38
+            },
+            {
+                "product": "Rothmans Blue Capsule King Size Cigarettes ",
+                "price": 0.38
+            },
+            {
+                "product": "Rothmans King Size Original Cigarettes ",
+                "price": 0.55
+            }
+        ]
+    },
+    {
+        "brand": "Royals",
+        "products": [
+            {
+                "product": "Royals King Size Red Cigarettes ",
+                "price": 0.5
+            },
+            {
+                "product": "Royals King Size Blue Cigarettes ",
+                "price": 0.5
+            }
+        ]
+    },
+    {
+        "brand": "Silk Cut",
+        "products": [
+            {
+                "product": "Silk Cut King Size Silver Cigarettes ",
+                "price": 0.55
+            },
+            {
+                "product": "Silk Cut Purple 100's Cigarettes ",
+                "price": 0.55
+            },
+            {
+                "product": "Silk Cut King Size Blue Cigarettes ",
+                "price": 0.55
+            },
+            {
+                "product": "Silk Cut King Size Purple Cigarettes ",
+                "price": 0.55
+            }
+        ]
+    },
+    {
+        "brand": "Sterling",
+        "products": [
+            {
+                "product": "Sterling King Size Cigarettes ",
+                "price": 0.41
+            },
+            {
+                "product": "Sterling Dual King Size Cigarettes ",
+                "price": 0.43
+            },
+            {
+                "product": "Sterling Superkings Cigarettes ",
+                "price": 0.41
+            },
+            {
+                "product": "Sterling Green King Size Cigarettes ",
+                "price": 0.41
+            },
+            {
+                "product": "Sterling Blue King Size Cigarettes ",
+                "price": 0.41
+            }
+        ]
+    },
+    {
+        "brand": "Superkings",
+        "products": [
+            {
+                "product": "Superkings Bright Blue Cigarettes ",
+                "price": 0.55
+            },
+            {
+                "product": "Superkings Original Black Cigarettes ",
+                "price": 0.55
+            }
+        ]
+    },
+    {
+        "brand": "Vogue",
+        "products": [
+            {
+                "product": "Vogue Perle Bronze ",
+                "price": 0.55
+            }
+        ]
+    }
+]

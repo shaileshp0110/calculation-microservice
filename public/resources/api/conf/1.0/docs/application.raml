@@ -26,3 +26,14 @@ mediaType: [ application/json ]
               application/json:
                 type: !include schemas/calculateResponse.json
                 example: !include examples/calculateResponseExample.json
+
+/products:
+  get:
+    displayName: Get Products
+    description: This resource returns Countries data
+    responses:
+      200:
+        body:
+          application/json:
+            type: !include schemas/productsResponse.json
+            example: !include examples/productsResponseExample.json

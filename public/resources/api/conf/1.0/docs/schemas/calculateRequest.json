@@ -102,12 +102,13 @@
               "description":"The currency code for the commodity value",
               "minLength":3,
               "maxLength":3,
+              "pattern":"^[A-Z]{3}$",
               "default":"GBP"
 
             },
             "origin":{
               "type":"string",
-              "description":"The country code of the origin of the commodity",
+              "description":"The country code of the origin of the commodity. If not present in the request, this attribute will be inferred to be the same as the 'arrivingfrom' attribute of the calculation request",
               "minLength":2,
               "maxLength":2
 

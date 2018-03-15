@@ -1,0 +1,37 @@
+{"$schema":"http://json-schema.org/draft-07/schema#",
+  "id":"countriesresponse.json",
+  "type": "array",
+  "items":{"$ref":"#/definitions/country"},
+  "definitions":{
+    "country":{
+      "type":"object",
+      "properties":{
+        "countrycode":{
+          "type":"string",
+              "description":"The 2 character country code for the country",
+              "minLength":2,
+              "maxLength":2,
+              "pattern":"^[A-Z]{2}$"
+        },
+        "countrytext":{
+          "type":"string",
+          "description":"The name of the country"
+
+        },
+        "countrydescription":{
+          "type":"string",
+          "description":"description of the country"
+
+        },
+        "currencycode":{
+          "type":"string",
+          "description":"The 3 character currency code for the currency of the country - 'none' for those countries which have no code",
+              "minLength":3,
+              "maxLength":4,
+              
+        }
+      }
+    }
+  }
+  
+}

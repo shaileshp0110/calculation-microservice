@@ -1,0 +1,30 @@
+{"$schema":"http://json-schema.org/draft-07/schema#",
+  "id":"productsresponse.json",
+  "type": "array",
+  "items":{"$ref":"#/definitions/product"},
+  "definitions":{
+    "product":{
+      "type":"object",
+      "properties":{
+        "commodityCode":{
+          "type":"string",
+              "description":"The 8 character Combined Nomenclature (CN) commodity code of the goods",
+              "minLength":8,
+              "maxLength":8,
+              "pattern":"^[0-9]{8}$"
+        },
+        "name":{
+          "type":"string",
+          "description":"name of the commodity"
+
+        },
+        "description":{
+          "type":"string",
+          "description":"description of the commodity"
+
+        }
+      }
+    }
+  }
+  
+}

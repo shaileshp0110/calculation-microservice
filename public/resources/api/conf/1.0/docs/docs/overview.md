@@ -18,3 +18,4 @@ Other endpoints are provided to support this functionality:
 /allowances returns data about the allowances that apply to users who are arriving from within the EU, or from the Rest of the World
 
 /cigaretterrps returns data about the current Recommended Retail Prices of various cigarette products - currently used in calculating the excise duties applicable to imported cigarettes. This endpoint  uses a wrapper around a web-scraping application that abstracts data from a supermarket price comparison website.
+

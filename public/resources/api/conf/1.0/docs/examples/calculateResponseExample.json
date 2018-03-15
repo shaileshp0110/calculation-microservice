@@ -1,0 +1,640 @@
+{
+    "tobacco": {
+        "allowances": [
+            {
+                "commoditycode": "24021000",
+                "commoditycodequalifier": "cigars",
+                "value": 200,
+                "valuecurrency": "USD",
+                "weight": 100,
+                "quantity": 10,
+                "origin": "CU",
+                "savingagainstallowance": 106.25651200000001,
+                "claimagainstallowance": 10
+            },
+            {
+                "commoditycode": "24022000",
+                "quantity": 160,
+                "rrp": 0.48,
+                "value": 76.80000000000001,
+                "valuecurrency": "GBP",
+                "savingagainstallowance": 71.04,
+                "claimagainstallowance": 160,
+                "origin": "USA"
+            }
+        ],
+        "declarations": [
+            {
+                "request": {
+                    "commoditycode": "24022000",
+                    "quantity": 40,
+                    "rrp": 0.48,
+                    "value": 19.19999999999999,
+                    "valuecurrency": "GBP",
+                    "origin": "USA",
+                    "customsvalue": 19.19999999999999
+                },
+                "excise": {
+                    "total": 11.6,
+                    "elements": [
+                        {
+                            "taxtype": "excise",
+                            "taxtypecode": "611",
+                            "description": "Cigarettes Excise Duty - Ad Valorem",
+                            "rate": "16.5%",
+                            "value": 3.168
+                        },
+                        {
+                            "taxtype": "excise",
+                            "taxtypecode": "611",
+                            "description": "Cigarettes Excise Duty - Specific",
+                            "rate": "£207.99",
+                            "value": 8.319600000000001
+                        },
+                        {
+                            "taxtype": "excise",
+                            "taxtypecode": "611",
+                            "description": "Cigarettes Excise Duty - MET",
+                            "rate": "£290",
+                            "value": 11.6
+                        }
+                    ]
+                },
+                "import": {
+                    "total": 0,
+                    "elements": []
+                },
+                "vat": {
+                    "total": 6.159999999999998,
+                    "elements": [
+                        {
+                            "taxtype": "VAT",
+                            "taxtypecode": "",
+                            "rate": "20%",
+                            "value": 6.159999999999998
+                        }
+                    ]
+                },
+                "total": 17.759999999999998,
+                "aggregate": {
+                    "total": 0,
+                    "elements": []
+                }
+            },
+            {
+                "request": {
+                    "commoditycode": "24031000",
+                    "commoditycodequalifier": "handrolling",
+                    "weight": 500,
+                    "value": 31.45,
+                    "valuecurrency": "USD",
+                    "origin": "US",
+                    "customsvalue": 22.6480885,
+                    "currencyconversion": {
+                        "basecurrency": "USD",
+                        "targetcurrency": "GBP",
+                        "rate": 0.72013,
+                        "value": 31.45,
+                        "convertedvalue": 22.6480885
+                    }
+                },
+                "excise": {
+                    "total": 110.59,
+                    "elements": [
+                        {
+                            "taxtype": "excise",
+                            "taxtypecode": "619",
+                            "description": "Handrolling Tobacco Excise Duty",
+                            "rate": "£221.18",
+                            "value": 110.59
+                        }
+                    ]
+                },
+                "import": {
+                    "total": 16.9634182865,
+                    "elements": [
+                        {
+                            "taxtype": "import",
+                            "taxtypecode": "R1006/11",
+                            "description": "Smoking Tobacco 3rd Country Import Duty",
+                            "rate": "74.9%",
+                            "value": 16.9634182865
+                        }
+                    ]
+                },
+                "vat": {
+                    "total": 30.040301357300002,
+                    "elements": [
+                        {
+                            "taxtype": "VAT",
+                            "taxtypecode": "",
+                            "rate": "20%",
+                            "value": 30.040301357300002
+                        }
+                    ]
+                },
+                "total": 157.5937196438,
+                "aggregate": {
+                    "total": 0,
+                    "elements": []
+                }
+            },
+            {
+                "request": {
+                    "commoditycode": "24031000",
+                    "commoditycodequalifier": "other",
+                    "weight": 1000,
+                    "value": 31.45,
+                    "valuecurrency": "USD",
+                    "origin": "US",
+                    "customsvalue": 22.6480885,
+                    "currencyconversion": {
+                        "basecurrency": "USD",
+                        "targetcurrency": "GBP",
+                        "rate": 0.72013,
+                        "value": 31.45,
+                        "convertedvalue": 22.6480885
+                    }
+                },
+                "excise": {
+                    "total": 119.13,
+                    "elements": [
+                        {
+                            "taxtype": "excise",
+                            "taxtypecode": "623",
+                            "description": "Other Smoking Tobacco Excise Duty",
+                            "rate": "£119.13",
+                            "value": 119.13
+                        }
+                    ]
+                },
+                "import": {
+                    "total": 16.9634182865,
+                    "elements": [
+                        {
+                            "taxtype": "import",
+                            "taxtypecode": "R1006/11",
+                            "description": "Smoking Tobacco 3rd Country Import Duty",
+                            "rate": "74.9%",
+                            "value": 16.9634182865
+                        }
+                    ]
+                },
+                "vat": {
+                    "total": 31.7483013573,
+                    "elements": [
+                        {
+                            "taxtype": "VAT",
+                            "taxtypecode": "",
+                            "rate": "20%",
+                            "value": 31.7483013573
+                        }
+                    ]
+                },
+                "total": 167.8417196438,
+                "aggregate": {
+                    "total": 0,
+                    "elements": []
+                }
+            }
+        ],
+        "totals": {
+            "allduties": 343.1954392876
+        }
+    },
+    "alcohol": {
+        "allowances": [
+            {
+                "commoditycode": "22030000",
+                "volume": 10,
+                "value": 20,
+                "abv": 0.08,
+                "valuecurrency": "GBP",
+                "origin": "USA"
+            },
+            {
+                "commoditycode": "22080000",
+                "volume": 1,
+                "value": 30,
+                "abv": 0.4,
+                "valuecurrency": "GBP",
+                "origin": "USA"
+            }
+        ],
+        "declarations": [
+            {
+                "request": {
+                    "commoditycode": "22080000",
+                    "volume": 14,
+                    "value": 420,
+                    "abv": 0.4,
+                    "valuecurrency": "GBP",
+                    "origin": "USA",
+                    "customsvalue": 420
+                },
+                "excise": {
+                    "total": 160.944,
+                    "elements": [
+                        {
+                            "taxtype": "excise",
+                            "taxtypecode": "451",
+                            "description": "Spirits Excise Duty",
+                            "rate": "£28.74",
+                            "value": 160.944
+                        }
+                    ]
+                },
+                "import": {
+                    "total": 0,
+                    "elements": []
+                },
+                "vat": {
+                    "total": 116.1888,
+                    "elements": [
+                        {
+                            "taxtype": "VAT",
+                            "taxtypecode": "",
+                            "rate": "20%",
+                            "value": 116.1888
+                        }
+                    ]
+                },
+                "total": 277.1328,
+                "aggregate": {
+                    "total": 0,
+                    "elements": []
+                }
+            },
+            {
+                "request": {
+                    "commoditycode": "22041000",
+                    "volume": 100,
+                    "value": 1000,
+                    "valuecurrency": "TRY",
+                    "abv": 0.15,
+                    "origin": "TR",
+                    "customsvalue": 187.64000000000001,
+                    "currencyconversion": {
+                        "basecurrency": "TRY",
+                        "targetcurrency": "GBP",
+                        "rate": 0.18764,
+                        "value": 1000,
+                        "convertedvalue": 187.64000000000001
+                    }
+                },
+                "excise": {
+                    "total": 369.72,
+                    "elements": [
+                        {
+                            "taxtype": "excise",
+                            "taxtypecode": "411",
+                            "description": "Mid Strength Sparkling Wine Excise duty",
+                            "rate": "£369.72",
+                            "value": 369.72
+                        }
+                    ]
+                },
+                "import": {
+                    "total": 34.01856,
+                    "elements": [
+                        {
+                            "taxtype": "import",
+                            "taxtypecode": "R2204//99",
+                            "description": "Sparkling Wine 3rd Country Import Duty",
+                            "rate": "€32",
+                            "currencyvalue": 32,
+                            "conversionrate": 0.8859,
+                            "value": 28.3488
+                        },
+                        {
+                            "taxtype": "import",
+                            "taxtypecode": "D0238//98",
+                            "description": "Sparkling Wine Import Duty Tariff - Turkey",
+                            "rate": "€6.4",
+                            "currencyvalue": 6.4,
+                            "conversionrate": 0.8859,
+                            "value": 5.66976
+                        }
+                    ]
+                },
+                "vat": {
+                    "total": 118.275712,
+                    "elements": [
+                        {
+                            "taxtype": "VAT",
+                            "taxtypecode": "",
+                            "rate": "20%",
+                            "value": 118.275712
+                        }
+                    ]
+                },
+                "total": 522.014272,
+                "aggregate": {
+                    "total": 0,
+                    "elements": []
+                }
+            }
+        ],
+        "totals": {
+            "allduties": 799.147072
+        }
+    },
+    "other": {
+        "allowances": [
+            {
+                "commoditycode": "91010000",
+                "value": 400,
+                "valuecurrency": "USD",
+                "quantity": 1,
+                "origin": "USA"
+            },
+            {
+                "commoditycode": "85000000",
+                "value": 100,
+                "valuecurrency": "USD",
+                "quantity": 1,
+                "origin": "USA"
+            },
+            {
+                "commoditycode": "71170000",
+                "value": 20,
+                "valuecurrency": "USD",
+                "quantity": 1,
+                "origin": "USA"
+            }
+        ],
+        "declarations": [
+            {
+                "request": {
+                    "commoditycode": "85171200",
+                    "value": 250,
+                    "valuecurrency": "USD",
+                    "quantity": 1,
+                    "origin": "USA",
+                    "customsvalue": 180.0325,
+                    "currencyconversion": {
+                        "basecurrency": "USD",
+                        "targetcurrency": "GBP",
+                        "rate": 0.72013,
+                        "value": 250,
+                        "convertedvalue": 180.0325
+                    }
+                },
+                "excise": {
+                    "total": 0,
+                    "elements": []
+                },
+                "import": {
+                    "total": 8.1014625,
+                    "elements": [
+                        {
+                            "taxtype": "import",
+                            "taxtypecode": "",
+                            "description": "Electrical and Electronic Goods Import Duty",
+                            "rate": "4.5%",
+                            "value": 8.1014625
+                        }
+                    ]
+                },
+                "vat": {
+                    "total": 37.6267925,
+                    "elements": [
+                        {
+                            "taxtype": "VAT",
+                            "taxtypecode": "",
+                            "rate": "20%",
+                            "value": 37.6267925
+                        }
+                    ]
+                },
+                "total": 45.728255000000004,
+                "aggregate": {
+                    "total": 41.407475,
+                    "elements": [
+                        {
+                            "taxtype": "aggregate",
+                            "taxtypecode": "",
+                            "rate": "23%",
+                            "value": 41.407475
+                        }
+                    ]
+                }
+            },
+            {
+                "request": {
+                    "commoditycode": "84710000",
+                    "value": 200,
+                    "valuecurrency": "USD",
+                    "quantity": 1,
+                    "origin": "USA",
+                    "customsvalue": 144.026,
+                    "currencyconversion": {
+                        "basecurrency": "USD",
+                        "targetcurrency": "GBP",
+                        "rate": 0.72013,
+                        "value": 200,
+                        "convertedvalue": 144.026
+                    }
+                },
+                "excise": {
+                    "total": 0,
+                    "elements": []
+                },
+                "import": {
+                    "total": 0,
+                    "elements": []
+                },
+                "vat": {
+                    "total": 28.805200000000003,
+                    "elements": [
+                        {
+                            "taxtype": "VAT",
+                            "taxtypecode": "",
+                            "rate": "20%",
+                            "value": 28.805200000000003
+                        }
+                    ]
+                },
+                "total": 28.805200000000003,
+                "aggregate": {
+                    "total": 33.125980000000006,
+                    "elements": [
+                        {
+                            "taxtype": "aggregate",
+                            "taxtypecode": "",
+                            "rate": "23%",
+                            "value": 33.125980000000006
+                        }
+                    ]
+                }
+            },
+            {
+                "request": {
+                    "commoditycode": "71130000",
+                    "value": 150,
+                    "valuecurrency": "USD",
+                    "quantity": 1,
+                    "origin": "USA",
+                    "customsvalue": 108.01950000000001,
+                    "currencyconversion": {
+                        "basecurrency": "USD",
+                        "targetcurrency": "GBP",
+                        "rate": 0.72013,
+                        "value": 150,
+                        "convertedvalue": 108.01950000000001
+                    }
+                },
+                "excise": {
+                    "total": 0,
+                    "elements": []
+                },
+                "import": {
+                    "total": 2.7004875000000004,
+                    "elements": [
+                        {
+                            "taxtype": "import",
+                            "taxtypecode": "",
+                            "description": "Jewellery Import Duty",
+                            "rate": "2.5%",
+                            "value": 2.7004875000000004
+                        }
+                    ]
+                },
+                "vat": {
+                    "total": 22.1439975,
+                    "elements": [
+                        {
+                            "taxtype": "VAT",
+                            "taxtypecode": "",
+                            "rate": "20%",
+                            "value": 22.1439975
+                        }
+                    ]
+                },
+                "total": 24.844485000000002,
+                "aggregate": {
+                    "total": 24.844485000000002,
+                    "elements": [
+                        {
+                            "taxtype": "aggregate",
+                            "taxtypecode": "",
+                            "rate": "23%",
+                            "value": 24.844485000000002
+                        }
+                    ]
+                }
+            },
+            {
+                "request": {
+                    "commoditycode": "62000000",
+                    "value": 500,
+                    "valuecurrency": "USD",
+                    "quantity": 10,
+                    "origin": "USA",
+                    "customsvalue": 360.065,
+                    "currencyconversion": {
+                        "basecurrency": "USD",
+                        "targetcurrency": "GBP",
+                        "rate": 0.72013,
+                        "value": 500,
+                        "convertedvalue": 360.065
+                    }
+                },
+                "excise": {
+                    "total": 0,
+                    "elements": []
+                },
+                "import": {
+                    "total": 43.2078,
+                    "elements": [
+                        {
+                            "taxtype": "import",
+                            "taxtypecode": "",
+                            "description": "Clothing Import Duty",
+                            "rate": "12%",
+                            "value": 43.2078
+                        }
+                    ]
+                },
+                "vat": {
+                    "total": 80.65456,
+                    "elements": [
+                        {
+                            "taxtype": "VAT",
+                            "taxtypecode": "",
+                            "rate": "20%",
+                            "value": 80.65456
+                        }
+                    ]
+                },
+                "total": 123.86236,
+                "aggregate": {
+                    "total": 82.81495,
+                    "elements": [
+                        {
+                            "taxtype": "aggregate",
+                            "taxtypecode": "",
+                            "rate": "23%",
+                            "value": 82.81495
+                        }
+                    ]
+                }
+            },
+            {
+                "request": {
+                    "commoditycode": "62000000",
+                    "commoditycodequalifier": "children",
+                    "value": 500,
+                    "valuecurrency": "USD",
+                    "quantity": 10,
+                    "origin": "USA",
+                    "customsvalue": 360.065,
+                    "currencyconversion": {
+                        "basecurrency": "USD",
+                        "targetcurrency": "GBP",
+                        "rate": 0.72013,
+                        "value": 500,
+                        "convertedvalue": 360.065
+                    }
+                },
+                "excise": {
+                    "total": 0,
+                    "elements": []
+                },
+                "import": {
+                    "total": 43.2078,
+                    "elements": [
+                        {
+                            "taxtype": "import",
+                            "taxtypecode": "",
+                            "description": "Clothing Import Duty",
+                            "rate": "12%",
+                            "value": 43.2078
+                        }
+                    ]
+                },
+                "vat": {
+                    "total": 0,
+                    "elements": []
+                },
+                "total": 43.2078,
+                "aggregate": {
+                    "total": 82.81495,
+                    "elements": [
+                        {
+                            "taxtype": "aggregate",
+                            "taxtypecode": "",
+                            "rate": "23%",
+                            "value": 82.81495
+                        }
+                    ]
+                }
+            }
+        ],
+        "totals": {
+            "customsvalue": 1152.208,
+            "allduties": 266.4481,
+            "aggregateduties": 265.00784
+        }
+    }
+}

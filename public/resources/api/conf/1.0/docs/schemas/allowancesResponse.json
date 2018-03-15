@@ -1,0 +1,124 @@
+{"$schema":"http://json-schema.org/draft-07/schema#",
+  "id":"allowancesresponse.json",
+  "type": "object",
+  "properties":{
+    "ROW":{
+      "type":"object",
+      "description":"rest of World Allowances",
+      "properties":{
+        "alcohol":{
+          "type":"object",
+          "properties":{
+            "beer":{"$ref":"#/definitions/allowance"},
+            "wine":{"$ref":"#/definitions/allowance"},
+            "spirits":{"$ref":"#/definitions/allowance"},
+            "fortified wine":{"$ref":"#/definitions/allowance"},
+            "sparkling wine":{"$ref":"#/definitions/allowance"},
+            "other (<22%)":{"$ref":"#/definitions/allowance"}
+
+          }
+        },
+        "tobacco":{
+            "type":"object",
+            "properties":{
+              "cigarettes":{"$ref":"#/definitions/allowance"},
+              "cigarillos":{"$ref":"#/definitions/allowance"},
+              "cigars":{"$ref":"#/definitions/allowance"},
+              "tobacco":{"$ref":"#/definitions/allowance"}
+            }
+        },
+        "other":{
+            "type":"object",
+            "properties":{
+              "private":{"$ref":"#/definitions/allowance"},
+
+              "other":{"$ref":"#/definitions/allowance"},
+              "aggregate":{
+                "type":"object",
+                "properties":{
+                  "description":{
+                      "type":"string",
+                      "description":"description of the goods to which the allowance applies"
+                    },
+                    "type":{
+                      "type":"string",
+                      "description":"description of the limit",
+                      "enum":["ad valorum"],
+                    },
+                    "rate":{
+                      "type":"number",
+                      "description":"aggregate rate to apply to other ROW goods"
+                    },
+                    "limit":{
+                      "type":"number",
+                      "desription":"numeric limit for other goods"
+                    }
+                }
+
+              }
+
+            }
+        }
+
+      }
+    },
+    "EU":{
+      "type":"object",
+      "description":"EU Minimum Indicative Limits",
+      "properties":{
+        "alcohol":{
+          "type":"object",
+          "properties":{
+            "beer":{"$ref":"#/definitions/allowance"},
+            "wine":{"$ref":"#/definitions/allowance"},
+            "spirits":{"$ref":"#/definitions/allowance"},
+            "fortified wine":{"$ref":"#/definitions/allowance"}
+
+          },
+        "tobacco":{
+            "type":"object",
+            "properties":{
+              "cigarettes":{"$ref":"#/definitions/allowance"},
+              "cigarillos":{"$ref":"#/definitions/allowance"},
+              "cigars":{"$ref":"#/definitions/allowance"},
+              "tobacco":{"$ref":"#/definitions/allowance"}
+            }
+        }
+
+      } 
+    }
+  }
+  },
+  "definitions":{
+    "allowance":{
+      "type":"object",
+      "properties":{
+        "description":{
+          "type":"string",
+          "description":"description of the goods to which the allowance applies"
+        },
+        "commoditycode":{
+           "type":"string",
+              "description":"Regular expression for matching the 8 character Combined Nomenclature (CN) commodity code of the goods",
+              "optional":true
+        },
+        "commoditycodequalifier":{
+              "type":"string",
+              "description":"qualifier where different allowances apply to the same commodity code",
+              "optional":true,
+              "enum":["fortified","other","cigarillos","cigars"]
+        },
+        "unit":{
+          "type":"string",
+          "description":"unit in which the limit is measured",
+          "enum":["litres","grammes","units","ad valorum"],
+        },
+        "limit":{
+          "type":"number",
+          "description":"numeric limit for the commodity"
+        }
+
+      }
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{"arrivingfrom": "USA",
+"items":[
+  {"commoditycode":"22041000","volume":100.00,"value":1000.00,"valuecurrency":"TRY", "abv":0.15,"origin":"TR"},
+  {"commoditycode":"22030000","volume":10.00,"value":20.00,"abv":0.08},
+  {"commoditycode":"22080000","volume":15.0,"value":450.00,"abv":0.4},
+  {"commoditycode":"24022000","quantity":200,"rrp":0.48,"value":96.00 },
+  {"commoditycode":"24021000","commoditycodequalifier":"cigars","value":200,"valuecurrency":"USD","weight":100,"quantity":10,"origin":"CU"},
+  {"commoditycode":"24031000","commoditycodequalifier":"handrolling","weight":500, "value":31.45,"valuecurrency":"USD", "origin":"US"},
+  {"commoditycode":"24031000","commoditycodequalifier":"other","weight":1000, "value":31.45,"valuecurrency":"USD", "origin":"US"},
+  {"commoditycode":"62000000","commoditycodequalifier":"children","value":500.00,"valuecurrency":"USD","quantity": 10},
+  {"commoditycode":"62000000","value":500.00,"valuecurrency":"USD","quantity": 10},
+  {"commoditycode":"84710000","value":200.00,"valuecurrency":"USD","quantity":1},
+  {"commoditycode":"85000000","value":100.00,"valuecurrency":"USD","quantity":1},
+  {"commoditycode":"71170000","value":20.00,"valuecurrency":"USD","quantity":1},
+  {"commoditycode":"71130000","value":150.00,"valuecurrency":"USD","quantity":1},
+  {"commoditycode":"91010000","value":400.00,"valuecurrency":"USD","quantity":1},
+  {"commoditycode":"85171200","value":250.00,"valuecurrency":"USD","quantity":1}
+]}

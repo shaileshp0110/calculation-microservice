@@ -28,6 +28,7 @@ nconf.defaults(
     'server': {
       'port': 3030
     },
+    'measurespath':'./measures.js',
     'rrpserviceurl':'http://www.mysupermarket.co.uk/Shopping/FindProducts.aspx?query=cigarettes&store=Tesco&_fcategory=cigarettes&_fbrand=',
     'conversionserviceurl':'https://api.fixer.io/latest?base=',
     'brands':["Benson_And_Hedges","Berkeley","Camel","Carlton","Chesterfield","Dunhill","Embassy","John_Player_Special","Lambert_And_Butler","Marlboro","Mayfair","Pall_Mall","Regal_Tobacconist","Richmond_Tobacconist","Rothmans","Royals","Silk_Cut","Sterling","Superkings","Vogue"],
@@ -45,7 +46,7 @@ nconf.defaults(
             "description":"wine (not sparkling)",
             "commoditycode":"22042000",
             "unit":"litres",
-            "limit":"4"
+            "limit":4
           },
           "spirits": {
             "description":"spirits and other liquors over 22% alcohol",
@@ -177,7 +178,7 @@ nconf.defaults(
             "description":"wine",
             "commoditycode":"^2204[1-2][0-9]{3}",
             "unit":"litres",
-            "limit":"90"
+            "limit":90
           },
           "spirits": {
             "description":"spirits and other liquors over 22% alcohol",
@@ -461,6 +462,8 @@ nconf.defaults(
     {"countrycode":"ZW","countrytext":"Zimbabwe","countrydescription":"","currencycode":"USD"}
 ],
 "euMembers":["DE","PL","FR","IT","RO","SE","ES","GR","HU","AT","HR","BG","CZ","NL","FI","BE","LT","DK","CY","MT","EE","PT","IE","SK","SI","LV"],
+  
+//Currencies sourced from: https://github.com/xsolla/currency-format
   "currencies":{
   "AED": {
     "name": "UAE Dirham",
