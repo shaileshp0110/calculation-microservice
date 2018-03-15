@@ -1,0 +1,63 @@
+{"$schema":"http://json-schema.org/draft-07/schema#",
+  "id":"currenciesresponse.json",
+  "type": "object",
+  "desription":"Currencies, keyed off ISO 4217 currency code - only GB Pounds shown here",
+  "properties":{
+    "GBP":{"$ref":"#/definitions/currency"}
+  },
+  "definitions":{
+    "currency":{
+      "type":"object",
+      "properties":{
+        "name":{
+          "type":"string",
+          "description":"Currency name"
+        },
+        "fractionSize":{
+          "type":"number",
+          "description":"Fraction size, a number of decimal places."
+
+        },
+        "symbol":{
+          "description":"Currency Symbol information",
+          "type":"object",
+          "properties":{
+            "grapheme":{
+              "type":"string",
+              "description":"Currency Symbol"
+            },
+            "template":{
+              "type":"string",
+              "description":"Template showing where the currency symbol should be located (before or after amount)"
+            },
+            "rtl":{
+              "type":"boolean",
+              "description":"Writing direction - true = right-to-left"
+            }
+          }
+
+        },
+        "uniqSymbol":{
+          "description":"Alternative Currency Symbol",
+          "type":"object",
+          "properties":{
+            "grapheme":{
+              "type":"string",
+              "description":"Alternative Currency Symbol"
+            },
+            "template":{
+              "type":"string",
+              "description":"Template showing where the currency symbol should be located (before or after amount)"
+            },
+            "rtl":{
+              "type":"boolean",
+              "description":"Writing direction - true = right-to-left"
+            }
+          }
+
+        }
+      }
+    }
+  }
+  
+}

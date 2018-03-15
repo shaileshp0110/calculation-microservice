@@ -30,10 +30,51 @@ mediaType: [ application/json ]
 /products:
   get:
     displayName: Get Products
-    description: This resource returns Countries data
+    description: This resource returns Products data
     responses:
       200:
         body:
           application/json:
             type: !include schemas/productsResponse.json
             example: !include examples/productsResponseExample.json
+/countries:
+  get:
+    displayName: Get Countries
+    description: This resource returns Countries data
+    responses:
+      200:
+        body:
+          application/json:
+            type: !include schemas/countriesResponse.json
+            example: !include examples/countriesResponseExample.json
+/currencies:
+  get:
+    displayName: Get Currencies
+    description: This resource returns Currencies data
+    responses:
+      200:
+        body:
+          application/json:
+            type: !include schemas/currenciesResponse.json
+            example: !include examples/currenciesResponseExample.json
+/allowances:
+  get:
+    displayName: Get Allowances
+    description: This resource returns EU and ROW allowances data
+    responses:
+      200:
+        body:
+          application/json:
+            type: !include schemas/allowancesResponse.json
+            example: !include examples/allowancesResponseExample.json
+/cigaretterrps:
+  get:
+    displayName: Get Cigarette Recommended Retail Prices
+    description: This resource returns Recommended Retail Price data for cigarettes
+    responses:
+      200:
+        body:
+          application/json:
+            type: !include schemas/cigaretterrpsResponse.json
+            example: !include examples/cigaretterrpsResponseExample.json
+

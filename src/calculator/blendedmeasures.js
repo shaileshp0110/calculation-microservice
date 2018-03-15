@@ -52,7 +52,7 @@ const measures = [
   "taxtype":"excise",
   "taxtypecode":"",
   "shortdescription":"Alcohol Excise Duty - Ad Valorem",
-  "description":"Excise Duty for Alcohol Products - Ad Valorem",
+  "description":"Excise Duty for Alcohol Goods - Ad Valorem",
   "ratetype":"ad valorem",
   "rate":0.025,
   "unit":"%",
@@ -85,14 +85,14 @@ const measures = [
   "taxtype":"excise",
   "taxtypecode":"",
   "shortdescription":"Tobacco Excise Duty - Ad Valorem",
-  "description":"Excise Duty for Tobacco Products - Ad Valorem",
+  "description":"Excise Duty for Tobacco Goods - Ad Valorem",
   "ratetype":"ad valorem",
   "rate":0.03,
   "unit":"%",
   "series":2,
   "calculation": (calculation, request, duty) => {
     return(new Promise ((resolve, reject) => {
-      const dutyVal = request.customsvalue  * duty.rate //2.5% of customs value
+      const dutyVal = request.customsvalue  * duty.rate //3% of customs value
         calculation.excise.total += dutyVal
         calculation.total += dutyVal
 

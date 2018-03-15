@@ -104,7 +104,7 @@ const allocateAllowances = (countryCode,qualifier, items) => {
       })
       .then(allocatedOtherAllowances =>{
         allocatedAllowances['other'] = allocatedOtherAllowances
-
+        calculateGrandTotals(allocatedAllowances)
         resolve(allocatedAllowances)
       })
       .catch(error => {
@@ -287,7 +287,10 @@ const allocateTobaccoAllowances = (regionAllowances,items,regionCode,countryCode
       .then(calculationResults =>{
         returnedObject.declarations = calculationResults
         returnedObject.totals={
-          "allduties": addAllDuties(calculationResults)
+          "allduties": addAllDuties(calculationResults,'total'),
+          "exciseduties": addAllDuties(calculationResults,"excise"),
+          "importduties": addAllDuties(calculationResults,"import"),
+          "vatduties": addAllDuties(calculationResults,"vat")
         }
         resolve(returnedObject)
       })
@@ -425,7 +428,10 @@ const allocateOtherAllowances = (regionAllowances, items, regionCode, qualifier,
         returnedObject.declarations = calculationResults
         returnedObject.totals={
           "customsvalue":addAllCustomsValues(calculationResults),
-          "allduties": addAllDuties(calculationResults),
+          "allduties": addAllDuties(calculationResults,"total"),
+          "exciseduties": addAllDuties(calculationResults,"excise"),
+          "importduties": addAllDuties(calculationResults,"import"),
+          "vatduties": addAllDuties(calculationResults,"vat"),
           "aggregateduties": addAggregateDuties(calculationResults)
         }
         resolve(returnedObject)
@@ -443,10 +449,16 @@ const allocateOtherAllowances = (regionAllowances, items, regionCode, qualifier,
 }
 
 
-const addAllDuties = (calculationResults) =>{
+const addAllDuties = (calculationResults,option) =>{
   let total = 0.0
   calculationResults.forEach(calculation => {
-    total+= calculation.total
+    if(option == 'total'){
+      total+= calculation.total
+    }
+    else{
+      total+= calculation[option].total
+    }
+    
   })
   return(total)
 }
@@ -514,6 +526,42 @@ const getItemAllowanceCategory = (commoditycode,commoditycodequalifier,allowance
     }
   }
 
+}
+
+
+const calculateGrandTotals = (allocatedAllowances) =>{
+
+  let totals={
+        "allduties":  0.0,
+        "exciseduties":0.0,
+        "importduties":0.0,
+        "vatduties":0.0
+
+  }
+
+  if(typeof allocatedAllowances.tobacco !== 'undefined' && typeof allocatedAllowances.tobacco.totals !== 'undefined'){
+    totals.allduties += allocatedAllowances.tobacco.totals.allduties
+    totals.exciseduties += allocatedAllowances.tobacco.totals.exciseduties
+    totals.importduties += allocatedAllowances.tobacco.totals.importduties
+    totals.vatduties += allocatedAllowances.tobacco.totals.vatduties
+  }
+
+  if(typeof allocatedAllowances.alcohol !== 'undefined' && typeof allocatedAllowances.alcohol.totals !== 'undefined'){
+    totals.allduties += allocatedAllowances.alcohol.totals.allduties
+    totals.exciseduties += allocatedAllowances.alcohol.totals.exciseduties
+    totals.importduties += allocatedAllowances.alcohol.totals.importduties
+    totals.vatduties += allocatedAllowances.alcohol.totals.vatduties
+  }
+
+  if(typeof allocatedAllowances.other !== 'undefined' && typeof allocatedAllowances.other.totals !== 'undefined'){
+    totals.allduties += allocatedAllowances.other.totals.allduties
+    totals.exciseduties += allocatedAllowances.other.totals.exciseduties
+    totals.importduties += allocatedAllowances.other.totals.importduties
+    totals.vatduties += allocatedAllowances.other.totals.vatduties
+  }
+
+  
+  allocatedAllowances.totals=totals
 }
 
 const allocateAlcoholAllowances = (regionAllowances, items, regionCode, countryCode) =>{
@@ -657,7 +705,10 @@ const allocateAlcoholAllowances = (regionAllowances, items, regionCode, countryC
       .then(calculationResults =>{
         returnedObject.declarations = calculationResults
         returnedObject.totals={
-          "allduties": addAllDuties(calculationResults),
+          "allduties": addAllDuties(calculationResults,'total'),
+          "exciseduties": addAllDuties(calculationResults,"excise"),
+          "importduties": addAllDuties(calculationResults,"import"),
+          "vatduties": addAllDuties(calculationResults,"vat"),
         }
         resolve(returnedObject)
       })
