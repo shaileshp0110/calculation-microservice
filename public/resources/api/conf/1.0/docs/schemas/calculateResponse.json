@@ -60,7 +60,8 @@
         },
         "totals":{"$ref":"#/definitions/totals"}
       }
-    }
+    },
+    "totals":{"$ref":"#/definitions/totals"}
   },
   "definitions":{
     "request":{
@@ -343,14 +344,26 @@
             },
             "allduties":{
               "type":"number",
-              "description":"The total value of all duties charged against the goods item"
+              "description":"The total value of all duties charged against the goods"
             },
             "aggregatedduties":{
               "type":"number",
               "description":"the 'aggregated' rate of duty that would be charged against the goods"
+            },
+            "exciseduties":{
+              "type":"number",
+              "description":"Total of all excise duties"
+            },
+            "importduties":{
+              "type":"number",
+              "description":"Total of all import duties"
+            },
+            "vatduties":{
+              "type":"number",
+              "description":"Total of all VAT duties"
             }
           },
-          "required":["allduties"]
+          "required":["allduties","exciseduties","importduties","vatduties"]
         }
     }
     

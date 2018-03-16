@@ -1,4 +1,4 @@
-{"arrivingfrom": "USA",
+{"arrivingfrom": "US",
 "items":[
   {"commoditycode":"22041000","volume":100.00,"value":1000.00,"valuecurrency":"TRY", "abv":0.15,"origin":"TR"},
   {"commoditycode":"22030000","volume":10.00,"value":20.00,"abv":0.08},
