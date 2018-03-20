@@ -345,6 +345,8 @@ const allocateOtherAllowances = (regionAllowances, items, regionCode, qualifier,
 
       calculations.forEach(calculation =>{  //work out the duties/unit for each item, and get the allowances
       
+          if(typeof calculation.request.quantity == 'undefined')
+            calculation.request.quantity = 1
           calculation.request.dutyperunit = calculation.total / calculation.request.quantity
   
       })
@@ -354,7 +356,6 @@ const allocateOtherAllowances = (regionAllowances, items, regionCode, qualifier,
               if(b.request.dutyperunit > a.request.dutyperunit) return 1
               return 0
       })
-
 
 
       do{
