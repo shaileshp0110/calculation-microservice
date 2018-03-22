@@ -301,7 +301,7 @@ const allocateTobaccoAllowances = (regionAllowances,items,regionCode,countryCode
       
     })
     .catch(error =>{
-          logger.error(error)
+          logger.error(error.stack)
     })
   }))
 }
@@ -513,7 +513,6 @@ const getItemAllowanceCategory = (commoditycode,commoditycodequalifier,allowance
     let allowance = allowances[a];
     const regex = new RegExp(allowance.commoditycode)
     const match = commoditycode.match(regex);
-    
   
    
     if(match &&(match[0]!== "")){
@@ -566,6 +565,7 @@ const calculateGrandTotals = (allocatedAllowances) =>{
 }
 
 const allocateAlcoholAllowances = (regionAllowances, items, regionCode, countryCode) =>{
+
   return(new Promise((resolve, reject) =>{
     let returnedObject ={
       "allowances":[],
@@ -587,6 +587,7 @@ const allocateAlcoholAllowances = (regionAllowances, items, regionCode, countryC
         allowances = { //working copy of allowances
           "wine": regionAllowances.alcohol.wine.limit,
           "beer": regionAllowances.alcohol.beer.limit,
+          "cider": regionAllowances.alcohol.cider.limit,
           "spirits":regionAllowances.alcohol.spirits.limit,
           "fortified wine":regionAllowances.alcohol["fortified wine"].limit,
           "sparkling wine":regionAllowances.alcohol["sparkling wine"].limit,
@@ -631,13 +632,13 @@ const allocateAlcoholAllowances = (regionAllowances, items, regionCode, countryC
             let against = calculations[0].request.allowance.against //the category against which we are clainming the allowance
 
             if(split){      //we are splitting allowances (i.e. it is a ROW passenger)
-              if((against == 'beer')||(against == 'wine')){ //reduce the remaining beer or wine allowance
+              if((against == 'beer')||(against == 'wine')||(against == 'cider')){ //reduce the remaining beer or wine allowance
               allowances[against] -= ratio * allowances[against]
               }
               else if(calculations[0].request.claimagainstallowance > 0){
                  //adjust remining allowances together, if its not beer or wine, and the amount claimed is > 0
                 for(let a in allowances){
-                  if((a !== "beer")&&(a !== "wine"))
+                  if((a !== "beer")&&(a !== "wine")&&(a !== "cider"))
                     allowances[a] -= ratio * allowances[a]
                 }
               }
@@ -685,7 +686,7 @@ const allocateAlcoholAllowances = (regionAllowances, items, regionCode, countryC
             calculations.shift() 
 
 
-      }while((calculations.length > 0)&&((allowances['beer'] > 0)||(allowances['beer'] > 0)||(allowances['spirits'] > 0)||(allowances["fortified wine"] > 0)||(allowances["sparkling wine"] > 0)||(allowances["other (<22%)"] > 0)))
+      }while((calculations.length > 0)&&((allowances['beer'] > 0)||(allowances['beer'] > 0)||(allowances['cider'] > 0)||(allowances['spirits'] > 0)||(allowances["fortified wine"] > 0)||(allowances["sparkling wine"] > 0)||(allowances["other (<22%)"] > 0)))
 
        //add any remaining items to 'declarations'
 

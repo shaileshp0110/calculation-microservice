@@ -42,6 +42,13 @@ nconf.defaults(
             "limit": 16
 
           },
+          "cider": {
+            "description":"cider",
+            "commoditycode":"22060000",
+            "unit":"litres", 
+            "limit": 16
+
+          },
           "wine": {
             "description":"wine (not sparkling)",
             "commoditycode":"22042000",
@@ -199,24 +206,35 @@ nconf.defaults(
       }
     },
     "products":[
-      {"commodityCode":"22030000","name":"Beer","description":"Beer made from malt"},
-      {"commodityCode":"22040000","name":"Wine","description":"Wine of fresh grapes"},
-      {"commodityCode":"22041000","name":"Sparkling Wine","description":"Sparkling wine"},
-      {"commodityCode":"22042000","name":"Wine","description":"Non-sparkling wine"},
-      {"commodityCode":"22060000","name":"Cider","description":"Other fermented beverages, eg cider, perry, mead, sake"},
-      {"commodityCode":"22050000","name":"Vermouth","description":"Vermouth and other wine of fresh grapes flavoured with plants or aromatic substances"},
-      {"commodityCode":"22080000","name":"Spirits","description":"Spirits obtained by distilling grape wine or grape marc"},
-      {"commodityCode":"24021000","name":"Cigars","description":"Cigars, cheroots and cigarillos containing tobacco"},
-      {"commodityCode":"24022000","name":"Cigarettes","description":"Cigarettes containing tobacco"},
-      {"commodityCode":"24031000","name":"Tobacco","description":"Smoking Tobacco"},
-      {"commodityCode":"24039910","name":"Chewing Tobacco","description":"Chewing Tobacco"},
+      {"commoditycode":"22030000","name":"Beer","description":"Beer made from malt"},
+      {"commoditycode":"22040000","name":"Wine","description":"Wine of fresh grapes"},
+      {"commoditycode":"22041000","name":"Sparkling Wine","description":"Sparkling wine"},
+      {"commoditycode":"22042000","name":"Wine","description":"Non-sparkling wine"},
+      {"commoditycode":"22060000","name":"Cider","description":"Other fermented beverages, eg cider, perry, mead, sake"},
+      {"commoditycode":"22050000","name":"Vermouth","description":"Vermouth and other wine of fresh grapes flavoured with plants or aromatic substances"},
+      {"commoditycode":"22080000","name":"Spirits","description":"Spirits obtained by distilling grape wine or grape marc"},
+      {"commoditycode":"24021000","name":"Cigars","description":"Cigars, cheroots and cigarillos containing tobacco"},
+      {"commoditycode":"24022000","name":"Cigarettes","description":"Cigarettes containing tobacco"},
+      {"commoditycode":"24031000","name":"Tobacco","description":"Smoking Tobacco"},
+      {"commoditycode":"24039910","name":"Chewing Tobacco","description":"Chewing Tobacco"},
+      {"commoditycode":"30040000","name":"Smoking Cessation Products" ,"description":"Medicaments consisting of mixed or unmixed products for therapeutic or prophylactic uses, put up in measured doses (including those in the form of transdermal administration systems) or in forms or packings for retail sale"},
+      {"commodityCode":"49000000","name":"Books and Publications","description":"Printed books, newspapers and other products of the printing industry; manuscripts, typescripts and plans"},
       {"commoditycode":"62000000","name":"Clothing","description":"Articles of apparel and clothing accessories"},
       {"commoditycode":"85000000","name":"Electricals and Electronics","description":"Electrical Machinery and equipment, and parts thereof"},
+      {"commoditycode":"70130000","name":"Glass and Glassware","description":"Glassware of a kind used for table, kitchen, toilet, office, indoor decoration or similar purposes"},
+      {"commoditycode":"69110000","name":"Porcelain or China","description":"Tableware, kitchenware, other hosehold articles and toilet articles, of porcelain or china"},
+      {"commoditycode":"64000000","name":"Footwear, not of leather","description":"Footwear, gaiters and the like, parts of such articles, not of leather"},
+      {"commoditycode":"64030000","name":"Footwear of leather","description":"Footwear of leather"},
+      {"commoditycode":"65061000","name":"Protective Helmets","description":"Safety Headgear"},
       {"commoditycode":"71170000","name":"Imitation Jewellery","description":"Imitation Jewellery"},
       {"commoditycode":"71130000","name":"Jewellery","description":"Articles of jewellery, and parts thereof, of precious metal or of metal clad with precious metal"},
       {"commoditycode":"91010000","name":"Watches","description":"Wristwatches, pocket-watches and other watches"},
       {"commoditycode":"84710000","name":"Computers","description":"Automatic data processing machines"},
-      {"commoditycode":"85171200","name":"Mobile Phones","description":"Telephones for cellular networks or for other wireless networks"}
+      {"commoditycode":"85171200","name":"Mobile Phones","description":"Telephones for cellular networks or for other wireless networks"},
+      {"commodityCode":"90210000","name":"Disability equipment/appliances","description":"Orthopaedic appliances, including crutches, surgical belts and trusses; splints and other fracture appliances; artificial parts of the body; hearing aids and other appliances which are worn or carried, or implanted in the body, to compensate for a defect or disability"},
+      {"commoditycode":"96190000","name":"Feminine Hygiene Products","description":"Sanitary towels (pads) and tampons, napkins and napkin liners for babies, and similar articles, of any material"},
+      {"commoditycode":"97000000","name":"Works of Art","description":"Works of Art, collectors' pieces and antiques"},
+      {"commoditycode":"00000000","name":"Other Goods","description":"All other Goods"}
 
     ],
     "countries":[
