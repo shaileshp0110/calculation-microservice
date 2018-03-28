@@ -28,7 +28,7 @@ nconf.defaults(
     'server': {
       'port': 3030
     },
-    'measurespath':'./measures.js',
+    'measurespath':'./blendedmeasures-02-18.js',
     'rrpserviceurl':'http://www.mysupermarket.co.uk/Shopping/FindProducts.aspx?query=cigarettes&store=Tesco&_fcategory=cigarettes&_fbrand=',
     'conversionserviceurl':'https://api.fixer.io/latest?base=',
     'brands':["Benson_And_Hedges","Berkeley","Camel","Carlton","Chesterfield","Dunhill","Embassy","John_Player_Special","Lambert_And_Butler","Marlboro","Mayfair","Pall_Mall","Regal_Tobacconist","Richmond_Tobacconist","Rothmans","Royals","Silk_Cut","Sterling","Superkings","Vogue"],

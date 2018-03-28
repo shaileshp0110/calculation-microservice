@@ -796,7 +796,7 @@ const applyMeasures = (matchingmeasures, request) => {
 
 
       const appliedImportCalculations = importMeasures.map(importMeasure =>{
-        return(importMeasure.calculation.call(null,calculation, request, importMeasure))
+        return(calculateItem(calculation, request, importMeasure))
       })
 
       Promise.all(appliedImportCalculations).then(elements =>{
@@ -817,13 +817,13 @@ const applyMeasures = (matchingmeasures, request) => {
 
       
         const appliedExciseCalculations = exciseMeasures.map(exciseMeasure =>{
-          return(exciseMeasure.calculation.call(null,calculation, request, exciseMeasure))
+          return(calculateItem(calculation, request, exciseMeasure))
         })
 
         Promise.all(appliedExciseCalculations).then(elements => {
           calculation.excise.elements = elements
               //filter measures to produce an array of matching measures which have either no conditions, or conditions which are met w.r.t the current request
-          let vatMeasures = matchingmeasures.filter(measure => measure.taxtype === 'VAT')
+          let vatMeasures = matchingmeasures.filter(measure => measure.taxtype === 'vat')
                                           .filter(measure => typeof(measure.conditions) === 'undefined'||measure.conditions.call(null,request))
 
           vatMeasures = vatMeasures.sort((a,b) =>{
@@ -836,7 +836,7 @@ const applyMeasures = (matchingmeasures, request) => {
           //get an array of promises for each calculation
           const appliedVATCalculations = vatMeasures.map(vatMeasure => {
           
-            return(vatMeasure.calculation.call(null,calculation, request, vatMeasure))
+            return(calculateItem(calculation, request, vatMeasure))
 
           })
 
@@ -850,7 +850,7 @@ const applyMeasures = (matchingmeasures, request) => {
 
     
             const appliedAggregateCalculations = aggregateMeasures.map(aggregateMeasure => {
-              return(aggregateMeasure.calculation.call(null,calculation, request, aggregateMeasure))
+              return(calculateItem(calculation, request, aggregateMeasure))
 
             })
 
@@ -876,6 +876,46 @@ const applyMeasures = (matchingmeasures, request) => {
 
      
   }))
+}
+
+const calculateItem = (calculation,request, duty) => {
+   return(new Promise ((resolve,reject) =>{
+
+    let dutyTotal
+
+    if(duty.taxtype == 'vat'){    //VAT is always an 'ad valorem' duty
+       dutyTotal = (request.customsvalue + calculation.excise.total + calculation.import.total)* duty.rate
+    }
+    else if((duty.taxtype == "import") || (duty.taxtype == 'excise')){
+      if(duty.ratetype == 'flat'){
+        dutyTotal = duty.rate * (request[duty.perunitof] / duty.unitdivisor)
+      }
+      else if(duty.ratetype == 'ad valorem'){
+        dutyTotal = request.customsvalue  * duty.rate
+      }
+
+    }
+    
+    calculation[duty.taxtype].total = dutyTotal
+
+    calculation.total += dutyTotal
+     let element = {
+      "taxtype": duty.taxtype,
+      "taxtypecode": duty.taxtypecode,
+      "description": duty.shortdescription,
+      "value": dutyTotal
+    }
+
+    if(duty.ratetype == 'flat'){
+      element.rate = duty.unit + duty.rate
+    }
+    else if(duty.ratetype == "ad valorem"){
+      element.rate = (duty.rate * 100) + duty.unit
+    }
+    resolve(element)
+
+  }))
+    
 }
 
 

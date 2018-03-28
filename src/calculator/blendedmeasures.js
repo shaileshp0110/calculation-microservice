@@ -15,7 +15,7 @@ const measures = [
 
 {
   "commoditycode":"[0-9]{8}",
-  "taxtype":"VAT",
+  "taxtype":"vat",
   "taxtypecode":"",
   "shortdescription":"UK VAT Standard Rate",
   "description": "UK VAT Standard Rate",
@@ -25,24 +25,6 @@ const measures = [
   "series":3,
   "conditions": request => {
     if((request.commoditycode == "62000000")&&(request.commoditycodequalifier == "children"))return(false); else return(true)
-  },
-  "calculation": (calculation,request, duty) => {
-     return(new Promise ((resolve,reject) =>{
-
-      const vatTotal = duty.rate * (request.customsvalue + calculation.excise.total + calculation.import.total)
-      calculation.vat.total = vatTotal
-      calculation.total += vatTotal
-       let element = {
-        "taxtype": duty.taxtype,
-        "taxtypecode": duty.taxtypecode,
-        "description": duty.shortdescription,
-        "rate":  (duty.rate * 100) + duty.unit,
-        "value": vatTotal
-      }
-      resolve(element)
-
-    }))
-    
   }
 
     
@@ -56,28 +38,7 @@ const measures = [
   "ratetype":"ad valorem",
   "rate":0.025,
   "unit":"%",
-  "series":2,
-  "calculation": (calculation, request, duty) => {
-    return(new Promise ((resolve, reject) => {
-      const dutyVal = request.customsvalue  * duty.rate //2.5% of customs value
-        calculation.excise.total += dutyVal
-        calculation.total += dutyVal
-
-         let element = {
-          "taxtype": duty.taxtype,
-          "taxtypecode": duty.taxtypecode,
-          "description": duty.shortdescription,
-          "rate": (duty.rate * 100)+duty.unit,
-          "value": dutyVal
-        }
-        resolve(element)
-
-     
-      
-    }))
-      
-
-  }
+  "series":2
 
 },
 {
@@ -89,28 +50,7 @@ const measures = [
   "ratetype":"ad valorem",
   "rate":0.03,
   "unit":"%",
-  "series":2,
-  "calculation": (calculation, request, duty) => {
-    return(new Promise ((resolve, reject) => {
-      const dutyVal = request.customsvalue  * duty.rate //3% of customs value
-        calculation.excise.total += dutyVal
-        calculation.total += dutyVal
-
-         let element = {
-          "taxtype": duty.taxtype,
-          "taxtypecode": duty.taxtypecode,
-          "description": duty.shortdescription,
-          "rate": (duty.rate * 100)+duty.unit,
-          "value": dutyVal
-        }
-        resolve(element)
-
-     
-      
-    }))
-      
-
-  }
+  "series":2
 
 },
 {
@@ -133,22 +73,6 @@ const measures = [
     if(tMatch && (tMatch[0] !== "")) return(false)
     return(true)
            
-  },
-  "calculation": (calculation,request, duty) => {
-     return(new Promise ((resolve,reject) =>{
-
-      const dutyTotal = duty.rate * request.customsvalue
-       let element = {
-        "taxtype": duty.taxtype,
-        "taxtypecode": duty.taxtypecode,
-        "description": duty.shortdescription,
-        "rate":  (duty.rate * 100) + duty.unit,
-        "value": dutyTotal
-      }
-      resolve(element)
-
-    }))
-    
   }
 
     

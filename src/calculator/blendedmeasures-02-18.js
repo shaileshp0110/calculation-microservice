@@ -25,7 +25,7 @@ VAT
 //20% Standard VAT Rate
 {
   "commoditycode":"[0-9]{8}",
-  "taxtype":"VAT",
+  "taxtype":"vat",
   "taxtypecode":"",
   "shortdescription":"UK VAT Standard Rate",
   "description": "UK VAT Standard Rate",
@@ -44,32 +44,13 @@ VAT
       ||(request.commoditycode == "30040000")
       ||(request.commoditycode == "96190000")
       )return(false); else return(true)
-  },
-  "calculation": (calculation,request, duty) => {
-     return(new Promise ((resolve,reject) =>{
-
-      const vatTotal = duty.rate * (request.customsvalue + calculation.excise.total + calculation.import.total)
-      calculation.vat.total = vatTotal
-      calculation.total += vatTotal
-       let element = {
-        "taxtype": duty.taxtype,
-        "taxtypecode": duty.taxtypecode,
-        "description": duty.shortdescription,
-        "rate":  (duty.rate * 100) + duty.unit,
-        "value": vatTotal
-      }
-      resolve(element)
-
-    }))
-    
   }
-
     
 },
 
 { //Children's clothes 0% VAT rated
   "commoditycode":"62000000",
-  "taxtype":"VAT",
+  "taxtype":"vat",
   "taxtypecode":"",
   "shortdescription":"UK VAT Zero Rate",
   "description": "UK VAT Zero Rate",
@@ -83,211 +64,84 @@ VAT
     if(request.commoditycodequalifier == "children")
       return(true)
     else return(false)
-  },
-  "calculation": (calculation,request, duty) => {
-     return(new Promise ((resolve,reject) =>{
-
-      const vatTotal = duty.rate * (request.customsvalue + calculation.excise.total + calculation.import.total)
-      calculation.vat.total = vatTotal
-      calculation.total += vatTotal
-       let element = {
-        "taxtype": duty.taxtype,
-        "taxtypecode": duty.taxtypecode,
-        "description": duty.shortdescription,
-        "rate":  (duty.rate * 100) + duty.unit,
-        "value": vatTotal
-      }
-      resolve(element)
-
-    }))
-    
   }
 
     
 },
 { //Books and publications 0% VAT rated
   "commoditycode":"49[0-9]{6}",
-  "taxtype":"VAT",
+  "taxtype":"vat",
   "taxtypecode":"",
   "shortdescription":"UK VAT Zero Rate",
   "description": "UK VAT Zero Rate",
   "ratetype":"ad valorem",
   "rate":0.0,
   "unit":"%",
-  "series":3,
-  "calculation": (calculation,request, duty) => {
-     return(new Promise ((resolve,reject) =>{
-
-      const vatTotal = duty.rate * (request.customsvalue + calculation.excise.total + calculation.import.total)
-      calculation.vat.total = vatTotal
-      calculation.total += vatTotal
-       let element = {
-        "taxtype": duty.taxtype,
-        "taxtypecode": duty.taxtypecode,
-        "description": duty.shortdescription,
-        "rate":  (duty.rate * 100) + duty.unit,
-        "value": vatTotal
-      }
-      resolve(element)
-
-    }))
-    
-  }
-
+  "series":3
     
 },
 { //Disability Equipment 0% VAT rated
   "commoditycode":"9021[0-9]{4}",
-  "taxtype":"VAT",
+  "taxtype":"vat",
   "taxtypecode":"",
   "shortdescription":"UK VAT Zero Rate",
   "description": "UK VAT Zero Rate",
   "ratetype":"ad valorem",
   "rate":0.0,
   "unit":"%",
-  "series":3,
-  "calculation": (calculation,request, duty) => {
-     return(new Promise ((resolve,reject) =>{
-
-      const vatTotal = duty.rate * (request.customsvalue + calculation.excise.total + calculation.import.total)
-      calculation.vat.total = vatTotal
-      calculation.total += vatTotal
-       let element = {
-        "taxtype": duty.taxtype,
-        "taxtypecode": duty.taxtypecode,
-        "description": duty.shortdescription,
-        "rate":  (duty.rate * 100) + duty.unit,
-        "value": vatTotal
-      }
-      resolve(element)
-
-    }))
-    
-  }
+  "series":3
 
     
 },
 { //Protective Helmets 0% VAT rated
   "commoditycode":"65061[0-9]{3}",
-  "taxtype":"VAT",
+  "taxtype":"vat",
   "taxtypecode":"",
   "shortdescription":"UK VAT Zero Rate",
   "description": "UK VAT Zero Rate",
   "ratetype":"ad valorem",
   "rate":0.0,
   "unit":"%",
-  "series":3,
-  "calculation": (calculation,request, duty) => {
-     return(new Promise ((resolve,reject) =>{
-
-      const vatTotal = duty.rate * (request.customsvalue + calculation.excise.total + calculation.import.total)
-      calculation.vat.total = vatTotal
-      calculation.total += vatTotal
-       let element = {
-        "taxtype": duty.taxtype,
-        "taxtypecode": duty.taxtypecode,
-        "description": duty.shortdescription,
-        "rate":  (duty.rate * 100) + duty.unit,
-        "value": vatTotal
-      }
-      resolve(element)
-
-    }))
-    
-  }
+  "series":3
 
     
 },
 { //Works of Art  5% VAT rated
   "commoditycode":"97[0-9]{6}",
-  "taxtype":"VAT",
+  "taxtype":"vat",
   "taxtypecode":"",
   "shortdescription":"UK VAT 5% Rate",
   "description": "UK VAT 5% Rate",
   "ratetype":"ad valorem",
   "rate":0.05,
   "unit":"%",
-  "series":3,
-  "calculation": (calculation,request, duty) => {
-     return(new Promise ((resolve,reject) =>{
-
-      const vatTotal = duty.rate * (request.customsvalue + calculation.excise.total + calculation.import.total)
-      calculation.vat.total = vatTotal
-      calculation.total += vatTotal
-       let element = {
-        "taxtype": duty.taxtype,
-        "taxtypecode": duty.taxtypecode,
-        "description": duty.shortdescription,
-        "rate":  (duty.rate * 100) + duty.unit,
-        "value": vatTotal
-      }
-      resolve(element)
-
-    }))
-    
-  }
+  "series":3
 
     
 },
 { //Feminine Hygience Products  5% VAT rated
   "commoditycode":"9619[0-9]{4}",
-  "taxtype":"VAT",
+  "taxtype":"vat",
   "taxtypecode":"",
   "shortdescription":"UK VAT 5% Rate",
   "description": "UK VAT 5% Rate",
   "ratetype":"ad valorem",
   "rate":0.05,
   "unit":"%",
-  "series":3,
-  "calculation": (calculation,request, duty) => {
-     return(new Promise ((resolve,reject) =>{
-
-      const vatTotal = duty.rate * (request.customsvalue + calculation.excise.total + calculation.import.total)
-      calculation.vat.total = vatTotal
-      calculation.total += vatTotal
-       let element = {
-        "taxtype": duty.taxtype,
-        "taxtypecode": duty.taxtypecode,
-        "description": duty.shortdescription,
-        "rate":  (duty.rate * 100) + duty.unit,
-        "value": vatTotal
-      }
-      resolve(element)
-
-    }))
-    
-  }
+  "series":3
 
     
 },
 { //Smoking Cessation  Products  5% VAT rated
   "commoditycode":"3004[0-9]{4}",
-  "taxtype":"VAT",
+  "taxtype":"vat",
   "taxtypecode":"",
   "shortdescription":"UK VAT 5% Rate",
   "description": "UK VAT 5% Rate",
   "ratetype":"ad valorem",
   "rate":0.05,
   "unit":"%",
-  "series":3,
-  "calculation": (calculation,request, duty) => {
-     return(new Promise ((resolve,reject) =>{
-
-      const vatTotal = duty.rate * (request.customsvalue + calculation.excise.total + calculation.import.total)
-      calculation.vat.total = vatTotal
-      calculation.total += vatTotal
-       let element = {
-        "taxtype": duty.taxtype,
-        "taxtypecode": duty.taxtypecode,
-        "description": duty.shortdescription,
-        "rate":  (duty.rate * 100) + duty.unit,
-        "value": vatTotal
-      }
-      resolve(element)
-
-    }))
-    
-  }
+  "series":3
 
     
 },
@@ -306,26 +160,6 @@ IMPORT DUTY
   "series":2,
   "conditions": (request) => {
     return(!isEUMember(request.origin))
-  },
-  "calculation": (calculation, request, duty) => {
-    return(new Promise ((resolve, reject) => {
-      const dutyVal = request.customsvalue  * duty.rate //26% of  value
-        calculation.import.total += dutyVal
-        calculation.total += dutyVal
-
-         let element = {
-          "taxtype": duty.taxtype,
-          "taxtypecode": duty.taxtypecode,
-          "description": duty.shortdescription,
-          "rate": (duty.rate * 100)+duty.unit,
-          "value": dutyVal
-        }
-        resolve(element)
-
-     
-      
-    }))
-      
   }
 
 },
@@ -341,26 +175,6 @@ IMPORT DUTY
   "series":2,
   "conditions": (request) => {
     return(!isEUMember(request.origin))
-  },
-  "calculation": (calculation, request, duty) => {
-    return(new Promise ((resolve, reject) => {
-      const dutyVal = request.customsvalue  * duty.rate //74.9% of  value
-        calculation.import.total += dutyVal
-        calculation.total += dutyVal
-
-         let element = {
-          "taxtype": duty.taxtype,
-          "taxtypecode": duty.taxtypecode,
-          "description": duty.shortdescription,
-          "rate": (duty.rate * 100)+duty.unit,
-          "value": dutyVal
-        }
-        resolve(element)
-
-     
-      
-    }))
-      
   }
 
 },
@@ -376,26 +190,6 @@ IMPORT DUTY
   "series":2,
   "conditions": (request) => {
     return(!isEUMember(request.origin))
-  },
-  "calculation": (calculation, request, duty) => {
-    return(new Promise ((resolve, reject) => {
-      const dutyVal = request.customsvalue  * duty.rate //26% of  value
-        calculation.import.total += dutyVal
-        calculation.total += dutyVal
-
-         let element = {
-          "taxtype": duty.taxtype,
-          "taxtypecode": duty.taxtypecode,
-          "description": duty.shortdescription,
-          "rate": (duty.rate * 100)+duty.unit,
-          "value": dutyVal
-        }
-        resolve(element)
-
-     
-      
-    }))
-      
   }
 
 },
@@ -413,26 +207,6 @@ IMPORT DUTY
     if(request.commoditycodequalifier !== "children")return(false)
     if(isEUMember(request.origin))return(false)
     return(true)
-  },
-  "calculation": (calculation, request, duty) => {
-    return(new Promise ((resolve, reject) => {
-      const dutyVal = request.customsvalue  * duty.rate //10.5% of  value
-        calculation.import.total += dutyVal
-        calculation.total += dutyVal
-
-         let element = {
-          "taxtype": duty.taxtype,
-          "taxtypecode": duty.taxtypecode,
-          "description": duty.shortdescription,
-          "rate": (duty.rate * 100)+duty.unit,
-          "value": dutyVal
-        }
-        resolve(element)
-
-     
-      
-    }))
-      
   }
 
 },
@@ -450,26 +224,6 @@ IMPORT DUTY
     if(request.commoditycodequalifier == "children")return(false)
     if(isEUMember(request.origin))return(false)
     return(true)
-  },
-  "calculation": (calculation, request, duty) => {
-    return(new Promise ((resolve, reject) => {
-      const dutyVal = request.customsvalue  * duty.rate //12% of  value
-        calculation.import.total += dutyVal
-        calculation.total += dutyVal
-
-         let element = {
-          "taxtype": duty.taxtype,
-          "taxtypecode": duty.taxtypecode,
-          "description": duty.shortdescription,
-          "rate": (duty.rate * 100)+duty.unit,
-          "value": dutyVal
-        }
-        resolve(element)
-
-     
-      
-    }))
-      
   }
 
 },
@@ -485,26 +239,6 @@ IMPORT DUTY
   "series":2,
   "conditions": (request) => {
     return(!isEUMember(request.origin))
-  },
-  "calculation": (calculation, request, duty) => {
-    return(new Promise ((resolve, reject) => {
-      const dutyVal = request.customsvalue  * duty.rate //11% of  value
-        calculation.import.total += dutyVal
-        calculation.total += dutyVal
-
-         let element = {
-          "taxtype": duty.taxtype,
-          "taxtypecode": duty.taxtypecode,
-          "description": duty.shortdescription,
-          "rate": (duty.rate * 100)+duty.unit,
-          "value": dutyVal
-        }
-        resolve(element)
-
-     
-      
-    }))
-      
   }
 
 },
@@ -520,26 +254,6 @@ IMPORT DUTY
   "series":2,
   "conditions": (request) => {
     return(!isEUMember(request.origin))
-  },
-  "calculation": (calculation, request, duty) => {
-    return(new Promise ((resolve, reject) => {
-      const dutyVal = request.customsvalue  * duty.rate //6% of  value
-        calculation.import.total += dutyVal
-        calculation.total += dutyVal
-
-         let element = {
-          "taxtype": duty.taxtype,
-          "taxtypecode": duty.taxtypecode,
-          "description": duty.shortdescription,
-          "rate": (duty.rate * 100)+duty.unit,
-          "value": dutyVal
-        }
-        resolve(element)
-
-     
-      
-    }))
-      
   }
 
 },
@@ -555,26 +269,6 @@ IMPORT DUTY
   "series":2,
   "conditions": (request) => {
     return(!isEUMember(request.origin))
-  },
-  "calculation": (calculation, request, duty) => {
-    return(new Promise ((resolve, reject) => {
-      const dutyVal = request.customsvalue  * duty.rate //8% of  value
-        calculation.import.total += dutyVal
-        calculation.total += dutyVal
-
-         let element = {
-          "taxtype": duty.taxtype,
-          "taxtypecode": duty.taxtypecode,
-          "description": duty.shortdescription,
-          "rate": (duty.rate * 100)+duty.unit,
-          "value": dutyVal
-        }
-        resolve(element)
-
-     
-      
-    }))
-      
   }
 
 },
@@ -591,26 +285,6 @@ IMPORT DUTY
   "conditions": (request) => {
     if(request.commoditycode === "64030000") return(false) //exclude leather footwear
     return(!isEUMember(request.origin))
-  },
-  "calculation": (calculation, request, duty) => {
-    return(new Promise ((resolve, reject) => {
-      const dutyVal = request.customsvalue  * duty.rate //17% of  value
-        calculation.import.total += dutyVal
-        calculation.total += dutyVal
-
-         let element = {
-          "taxtype": duty.taxtype,
-          "taxtypecode": duty.taxtypecode,
-          "description": duty.shortdescription,
-          "rate": (duty.rate * 100)+duty.unit,
-          "value": dutyVal
-        }
-        resolve(element)
-
-     
-      
-    }))
-      
   }
 
 },
@@ -650,26 +324,6 @@ IMPORT DUTY
     if(fMatch && (fMatch[0] !== "")) return(false)
 
     return(!isEUMember(request.origin))
-  },
-  "calculation": (calculation, request, duty) => {
-    return(new Promise ((resolve, reject) => {
-      const dutyVal = request.customsvalue  * duty.rate //17% of  value
-        calculation.import.total += dutyVal
-        calculation.total += dutyVal
-
-         let element = {
-          "taxtype": duty.taxtype,
-          "taxtypecode": duty.taxtypecode,
-          "description": duty.shortdescription,
-          "rate": (duty.rate * 100)+duty.unit,
-          "value": dutyVal
-        }
-        resolve(element)
-
-     
-      
-    }))
-      
   }
 
 },
@@ -684,27 +338,11 @@ EXCISE DUTY
   "description":"Spirits Excise Duty",
   "ratetype":"flat",
   "rate":10.77,
+  "perunitof":"volume",
+  "unitdivisor":1,
   "currency":"GBP",
   "unit":"£",
-  "series":1,
-  "calculation": (calculation, request, duty) => {
-    return(new Promise ((resolve, reject) => {
-        const dutyVal = request.volume  * duty.rate 
-        calculation.excise.total += dutyVal
-        calculation.total += dutyVal
-
-        let element = {
-          "taxtype": duty.taxtype,
-          "taxtypecode": duty.taxtypecode,
-          "description": duty.shortdescription,
-          "rate": duty.unit + duty.rate,
-          "value": dutyVal
-        }
-        resolve(element)
-    }))
-
-
-  }
+  "series":1
 
 },
 {
@@ -715,27 +353,11 @@ EXCISE DUTY
   "description":"Beer Excise Duty",
   "ratetype":"flat",
   "rate":0.76,
+  "perunitof":"volume",
+  "unitdivisor":1,
   "currency":"GBP",
   "unit":"£",
-  "series":1,
-  "calculation": (calculation, request, duty) => {
-    return(new Promise ((resolve, reject) => {
-        const dutyVal = request.volume  * duty.rate 
-        calculation.excise.total += dutyVal
-        calculation.total += dutyVal
-
-        let element = {
-          "taxtype": duty.taxtype,
-          "taxtypecode": duty.taxtypecode,
-          "description": duty.shortdescription,
-          "rate": duty.unit + duty.rate,
-          "value": dutyVal
-        }
-        resolve(element)
-    }))
-
-
-  }
+  "series":1
 
 },
 {
@@ -746,27 +368,11 @@ EXCISE DUTY
   "description":"Cider Excise Duty",
   "ratetype":"flat",
   "rate":0.40,
+  "perunitof":"volume",
+  "unitdivisor":1,
   "currency":"GBP",
   "unit":"£",
-  "series":1,
-  "calculation": (calculation, request, duty) => {
-    return(new Promise ((resolve, reject) => {
-        const dutyVal = request.volume  * duty.rate 
-        calculation.excise.total += dutyVal
-        calculation.total += dutyVal
-
-        let element = {
-          "taxtype": duty.taxtype,
-          "taxtypecode": duty.taxtypecode,
-          "description": duty.shortdescription,
-          "rate": duty.unit + duty.rate,
-          "value": dutyVal
-        }
-        resolve(element)
-    }))
-
-
-  }
+  "series":1
 
 },
 {
@@ -777,27 +383,11 @@ EXCISE DUTY
   "description":"Wine Excise Duty",
   "ratetype":"flat",
   "rate":2.88,
+  "perunitof":"volume",
+  "unitdivisor":1,
   "currency":"GBP",
   "unit":"£",
-  "series":1,
-  "calculation": (calculation, request, duty) => {
-    return(new Promise ((resolve, reject) => {
-        const dutyVal = request.volume  * duty.rate 
-        calculation.excise.total += dutyVal
-        calculation.total += dutyVal
-
-        let element = {
-          "taxtype": duty.taxtype,
-          "taxtypecode": duty.taxtypecode,
-          "description": duty.shortdescription,
-          "rate": duty.unit + duty.rate,
-          "value": dutyVal
-        }
-        resolve(element)
-    }))
-
-
-  }
+  "series":1
 
 },
 {
@@ -808,27 +398,11 @@ EXCISE DUTY
   "description":"Sparkling Wine Excise Duty",
   "ratetype":"flat",
   "rate":3.69,
+  "perunitof":"volume",
+  "unitdivisor":1,
   "currency":"GBP",
   "unit":"£",
-  "series":1,
-  "calculation": (calculation, request, duty) => {
-    return(new Promise ((resolve, reject) => {
-        const dutyVal = request.volume  * duty.rate 
-        calculation.excise.total += dutyVal
-        calculation.total += dutyVal
-
-        let element = {
-          "taxtype": duty.taxtype,
-          "taxtypecode": duty.taxtypecode,
-          "description": duty.shortdescription,
-          "rate": duty.unit + duty.rate,
-          "value": dutyVal
-        }
-        resolve(element)
-    }))
-
-
-  }
+  "series":1
 
 },
 {
@@ -839,30 +413,14 @@ EXCISE DUTY
   "description":"Fortified Wine Excise Duty",
   "ratetype":"flat",
   "rate":3.69,
+  "perunitof":"volume",
+  "unitdivisor":1,
   "currency":"GBP",
   "unit":"£",
   "series":1,
   "conditions": request => { 
     return(request.commoditycodequalifier === "fortified")
      
-  },
-  "calculation": (calculation, request, duty) => {
-    return(new Promise ((resolve, reject) => {
-        const dutyVal = request.volume  * duty.rate 
-        calculation.excise.total += dutyVal
-        calculation.total += dutyVal
-
-        let element = {
-          "taxtype": duty.taxtype,
-          "taxtypecode": duty.taxtypecode,
-          "description": duty.shortdescription,
-          "rate": duty.unit + duty.rate,
-          "value": dutyVal
-        }
-        resolve(element)
-    }))
-
-
   }
 
 },
@@ -874,29 +432,10 @@ EXCISE DUTY
   "description":"Cigarettes Excise Duty",
   "ratetype":"flat",
   "rate":5.92, //per pack of 20
+  "perunitof":"quantity",
+  "unitdivisor":20,
   "unit":"£",
-  "series":2,
-  "calculation": (calculation, request, duty) => {
-    return(new Promise ((resolve, reject) => {
-      const dutyVal = duty.rate * (request.quantity / 20) //5.92 per pack
-        calculation.excise.total += dutyVal
-        calculation.total += dutyVal
-
-         let element = {
-          "taxtype": duty.taxtype,
-          "taxtypecode": duty.taxtypecode,
-          "description": duty.shortdescription,
-          "rate": duty.unit + duty.rate,
-          "value": dutyVal
-        }
-        resolve(element)
-
-     
-      
-    }))
-      
-
-  }
+  "series":2
 
 },
 {
@@ -907,30 +446,10 @@ EXCISE DUTY
   "description":"Cigars Excise Duty",
   "ratetype":"flat",
   "rate":270.96, //270.96 per kg 
+  "perunitof":"weight",
+  "unitdivisor": 1000,
   "unit":"£",
-  "series":2, 
-  "calculation": (calculation, request, duty) => {
-    return(new Promise ((resolve, reject) => {
-      const dutyVal = duty.rate * (request.weight / 1000) //270.96 per kg (weight is expressed in grammes)
-
-        calculation.excise.total += dutyVal
-        calculation.total += dutyVal
-
-         let element = {
-          "taxtype": duty.taxtype,
-          "taxtypecode": duty.taxtypecode,
-          "description": duty.shortdescription,
-          "rate": duty.unit + duty.rate,
-          "value": dutyVal
-        }
-        resolve(element)
-
-     
-      
-    }))
-      
-
-  }
+  "series":2
 
 },
 {
@@ -941,32 +460,12 @@ EXCISE DUTY
   "description":"Handrolling Tobacco Excise Duty",
   "ratetype":"flat",
   "rate":221.18, //per kg
+  "perunitof":"weight",
+  "unitdivisor": 1000,
   "unit":"£",
   "series":2, 
   "conditions": (request) => {
     return(request.commoditycodequalifier == 'handrolling')
-  },
-  "calculation": (calculation, request, duty) => {
-    return(new Promise ((resolve, reject) => {
-      const dutyVal = duty.rate * (request.weight / 1000) //221.18 per kg (weight is expressed in grammes)
-
-        calculation.excise.total += dutyVal
-        calculation.total += dutyVal
-
-         let element = {
-          "taxtype": duty.taxtype,
-          "taxtypecode": duty.taxtypecode,
-          "description": duty.shortdescription,
-          "rate": duty.unit + duty.rate,
-          "value": dutyVal
-        }
-        resolve(element)
-
-     
-      
-    }))
-      
-
   }
 
 },
@@ -978,32 +477,12 @@ EXCISE DUTY
   "description":"Other Smoking Tobacco Excise Duty",
   "ratetype":"flat",
   "rate":119.13, //per kg
+  "perunitof":"weight",
+  "unitdivisor":1000,
   "unit":"£",
   "series":2, 
   "conditions": (request) => {
     return(request.commoditycodequalifier === 'other')
-  },
-  "calculation": (calculation, request, duty) => {
-    return(new Promise ((resolve, reject) => {
-      const dutyVal = duty.rate * (request.weight / 1000) //119.13 per kg (weight is expressed in grammes)
-
-        calculation.excise.total += dutyVal
-        calculation.total += dutyVal
-
-         let element = {
-          "taxtype": duty.taxtype,
-          "taxtypecode": duty.taxtypecode,
-          "description": duty.shortdescription,
-          "rate": duty.unit + duty.rate,
-          "value": dutyVal
-        }
-        resolve(element)
-
-     
-      
-    }))
-      
-
   }
 
 },
