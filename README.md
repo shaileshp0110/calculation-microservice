@@ -1,31 +1,31 @@
 # calculation microservice
 
 install with "$ npm install"
-run with "$ npm start"
+run with `$ npm start`
 
 endpoints are:
 
-/allowances (GET)
+`/allowances` (GET)
 
-/cigaretterrps (GET)
+`/cigaretterrps` (GET)
 
-/products (GET)
+`/products` (GET)
 
-/countries (GET)
+`/countries` (GET)
 
-/currencies (GET)
+`/currencies` (GET)
 
-/calculate (POST)
+`/calculate` (POST)
 
 none of the endpoints take any query parameters for the GET verb
 
-Apart from /cigaretterrps and /calculate, all endpoints return static data from the configuration file /src/config/conf.js
+Apart from `/cigaretterrps` and `/calculate`, all endpoints return static data from the configuration file /src/config/conf.js
 
-/cigaretterrps scrapes a price comparison website to return current prices for cigarette products, broken down by brand
+`/cigaretterrps` scrapes a price comparison website to return current prices for cigarette products, broken down by brand
 
-/calculate takes a JSON object as an argument such as (example with excise goods exclusively:
+`/calculate` takes a JSON object as an argument such as (example with excise goods exclusively:
 
-{"arrivingfrom": "USA",
+`{"arrivingfrom": "USA",
 "items":[
 {"commoditycode":"22041000","volume":10.00,"value":100.00,"valuecurrency":"TRY", "abv":0.15,"origin":"TR"},
 {"commoditycode":"22030000","volume":10.00,"value":20.00,"abv":0.08},
@@ -33,7 +33,7 @@ Apart from /cigaretterrps and /calculate, all endpoints return static data from 
 {"commoditycode":"24021000","commoditycodequalifier":"cigars","value":200,"valuecurrency":"USD","weight":100,"quantity":10,"origin":"CU"},
 {"commoditycode":"24031000","commoditycodequalifier":"handrolling","weight":500, "value":31.45,"valuecurrency":"USD", "origin":"US"},
 {"commoditycode":"24031000","commoditycodequalifier":"other","weight":500, "value":31.45,"valuecurrency":"USD", "origin":"US"}
-]}
+]}`
 
 The above declaration is for a passenger arriving from the USA:
 
@@ -51,7 +51,7 @@ The above declaration is for a passenger arriving from the USA:
 
 Another example ('other' goods only):
 
-{"arrivingfrom": "US","arrivingfromqualifier":"private",
+`{"arrivingfrom": "US","arrivingfromqualifier":"private",
 "items":[
   {"commoditycode":"62000000","commoditycodequalifier":"children","value":500.00,"valuecurrency":"USD","quantity": 10},
   {"commoditycode":"62000000","value":500.00,"valuecurrency":"USD","quantity": 10},
@@ -61,7 +61,7 @@ Another example ('other' goods only):
   {"commoditycode":"71130000","value":150.00,"valuecurrency":"USD","quantity":1},
   {"commoditycode":"91010000","value":400.00,"valuecurrency":"USD","quantity":1},
   {"commoditycode":"85171200","value":250.00,"valuecurrency":"USD","quantity":1}
-]}
+]}`
 
 The above example is for a passenger ariving from the USA, arriving via private boat or aircraft:
 
@@ -80,7 +80,6 @@ A Jewellery item worth $150
 A watch costing $400
 
 A mobile phone costing $250
-
 
 
 
@@ -111,4 +110,48 @@ A mobile phone costing $250
  'origin' is the country code of the origin of the product (one of the country codes as returned by the /countries endpoint)
 
 
-The application is a Node/Express server, running on port 3030 by default (configurable through the config file)
+The application is a Node/Express server, running on port 3030 by default, configurable through the config file, or by passing in command line parameters, eg:
+
+`$npm start -- --measurespath=./blendedmeasures-02-18.js`
+
+## Assumptions
+
+###Data/Coding
+
+####Allowances
+Allowances for ROW are based on those quoted at https://www.gov.uk/duty-free-goods/arrivals-from-outside-the-eu with the addition of an allowance of 16l of cider. This allowance is treated the same as other alcohol allowances with regard to splitting. E.g. the passenger can import 8l of beer and 8l of cider and still be within the ROW allowance
+
+EU MILs are based on those quoted at https://www.gov.uk/duty-free-goods/arrivals-from-eu-countries
+
+#### Products
+Products are identified by use of the 8 digit Comined Nomenclature (CN) Subheading Code: https://ec.europa.eu/taxation_customs/business/calculation-customs-duties/what-is-common-customs-tariff/combined-nomenclature_en
+
+A defined subset of products and their CN codes is used in the system, as returned by the `/products` endpoint. 
+
+In some cases, a 'commoditycodequalifier' is used along with a CN code to identify a product, where the CN framework does not allow products to be identified to a level of granularity required by the duty system; e.g. the commoditycodequalifier 'children' is used alongside the CN code 62000000 to identify children's clothes (which is subject to a 0% VAT rate)
+
+
+#### Countries
+The set of country codes used by the system (as returned by the `/countries` endpoint) is that defined in the document "Commission Regulation (EU) No 1106/2012", found at: http://eur-lex.europa.eu/legal-content/EN/ALL/?uri=CELEX:32012R1106
+
+#### Currencies
+ISO4217 currency codes are used, sourced from: https://github.com/xsolla/currency-format
+
+#### Currency Conversions
+The simulator currently wraps a currency conversion API at https://api.fixer.io to perform currency conversions
+This is currently limited to the following currencies:
+AUD,"BGN,BRL,CAD,CHF,CNY,CZK,DKK,EUR,HKD,HRK,HUF,IDR,ILS,INR,ISK,JPY,KRW,MXN,MYR,NOK,NZD,PHP,PLN,RON,RUB,SEK,SGD,THB,TRY,USD,ZAR
+
+
+###Allocation of Allowances
+When allocating allowances, items where the quantity is greater than 1 are assumed to be items of the same value for the purposes of allocating allowances. For example, an item of value $1000 consisting of 10 items is assumed to be 10 items each costing $100 dollars, for the purpose of allocating allowances. It could be that 3 of these items could be allocated as allowances, with the passenger having to pay duties on the remaining 7 items.
+
+Items expressed in grammes are currently assumed to be infinitely divisible. If, for example, a passenger brings in 500g of hand rolling tobacco in a single pack, they could end up having any proportion of this weight  allocated as allowance, eg 1/3, 1/4, 1/2 etc. NB This will need to be changed, as it violates the principle that individual products cannot be subdivided. If this item was declared instead as 20 packs of 50g, then the situation would be analogous to the clothing example above.
+
+A heuristic 'Hill-Cimbing' approach is currently taken to allocating allowances: allowances are filled iteratively; at each step the item is added to the allowances that saves the passenger the most money in terms of duty that would not need to be paid. No analysis has yet been performed to demonstrate that this is globally optimal. 
+
+###General
+No rounding of amounts/values is currently performed in the Simulator
+
+
+
