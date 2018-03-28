@@ -116,9 +116,9 @@ The application is a Node/Express server, running on port 3030 by default, confi
 
 ## Assumptions
 
-###Data/Coding
+### Data/Coding
 
-####Allowances
+#### Allowances
 Allowances for ROW are based on those quoted at https://www.gov.uk/duty-free-goods/arrivals-from-outside-the-eu with the addition of an allowance of 16l of cider. This allowance is treated the same as other alcohol allowances with regard to splitting. E.g. the passenger can import 8l of beer and 8l of cider and still be within the ROW allowance
 
 EU MILs are based on those quoted at https://www.gov.uk/duty-free-goods/arrivals-from-eu-countries
@@ -143,14 +143,14 @@ This is currently limited to the following currencies:
 AUD,"BGN,BRL,CAD,CHF,CNY,CZK,DKK,EUR,HKD,HRK,HUF,IDR,ILS,INR,ISK,JPY,KRW,MXN,MYR,NOK,NZD,PHP,PLN,RON,RUB,SEK,SGD,THB,TRY,USD,ZAR
 
 
-###Allocation of Allowances
+### Allocation of Allowances
 When allocating allowances, items where the quantity is greater than 1 are assumed to be items of the same value for the purposes of allocating allowances. For example, an item of value $1000 consisting of 10 items is assumed to be 10 items each costing $100 dollars, for the purpose of allocating allowances. It could be that 3 of these items could be allocated as allowances, with the passenger having to pay duties on the remaining 7 items.
 
 Items expressed in grammes are currently assumed to be infinitely divisible. If, for example, a passenger brings in 500g of hand rolling tobacco in a single pack, they could end up having any proportion of this weight  allocated as allowance, eg 1/3, 1/4, 1/2 etc. NB This will need to be changed, as it violates the principle that individual products cannot be subdivided. If this item was declared instead as 20 packs of 50g, then the situation would be analogous to the clothing example above.
 
 A heuristic 'Hill-Cimbing' approach is currently taken to allocating allowances: allowances are filled iteratively; at each step the item is added to the allowances that saves the passenger the most money in terms of duty that would not need to be paid. No analysis has yet been performed to demonstrate that this is globally optimal. 
 
-###General
+### General
 No rounding of amounts/values is currently performed in the Simulator
 
 
