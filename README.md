@@ -86,7 +86,7 @@ A mobile phone costing $250
 
 'arrivingfrom' is the country code of the country from which the passenger is arriving
 
-'arrivingfromqualifier' can denote either the mens by which the passenger is arriving (e.g. 'private', for passengers arriving by private boat or plane - which has different allowances), or details some special case of departure point (e.g Canary Islands)
+'arrivingfromqualifier' can denote either the means by which the passenger is arriving (e.g. 'private', for passengers arriving by private boat or plane - which has different allowances), or details some special case of departure point (e.g Canary Islands)
 
 'items' is the list of items that the passenger is importing
 
