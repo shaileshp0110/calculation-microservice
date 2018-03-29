@@ -130,6 +130,15 @@ A defined subset of products and their CN codes is used in the system, as return
 
 In some cases, a 'commoditycodequalifier' is used along with a CN code to identify a product, where the CN framework does not allow products to be identified to a level of granularity required by the duty system; e.g. the commoditycodequalifier 'children' is used alongside the CN code 62000000 to identify children's clothes (which is subject to a 0% VAT rate)
 
+Volumes as expressed in items submitted to the calculator are assumed to be in litres. Weights as expressed in items submitted to the calculator are assumed to be in grammes.
+
+#### Measures
+Measures are the taxes that are applied to imported items. There are three types: "vat" measures, "import" measures, and "excise" measures. There are two types of calculation that can be applied by measures: "ad valorem", where the duty to be paid is expressed as a percentge of the 'customsvalue' of the item, and 'flat', where a figure (in GBP) is applied in proportion to the 'quantity' of the item, which can be expressed in terms of weight, volume, or number of units (for cigarettes, for example). An example would be "£5 per litre". In the coding of "flat" measures, the attribute "perunitof" expresses the quantity that the flat rate is applied to, and can take the values "weight", "volume", or "quantity". Alongside this, for 'flat' measures there is also an attribute 'unitdivisor'. This is used to align the units of the items with the units in which the measure is expressed. For example, cigarette measures may be expressed by the business as "£5.67 per pack", with a pack being 20 cigarettes. Cigarette item quanities are expressed in quantity of cigarettes, therefore the 'unitdivisor' in this case should be 20. Similarly, some tobacco excise duties are expressed 'per kilogramme', with weight being expressed in grammes in the items.
+
+Measures are matched to items using a Regular Expression ("commoditycode" in the measure structure) that is matched to the coomodity code of an item submitted to the calculator.
+
+Each measure currently has an associated 'conditions' attribute, which is a function that should be applied before applying the measure itself. This 'conditions' function is used to further restrict the applicability of the measure (by restricting the country of origin of the item, or the commoditycode qualifier). Going forward, this approach to applying preconditions would need to be swapped out for a more declarative approach.
+
 
 #### Countries
 The set of country codes used by the system (as returned by the `/countries` endpoint) is that defined in the document "Commission Regulation (EU) No 1106/2012", found at: http://eur-lex.europa.eu/legal-content/EN/ALL/?uri=CELEX:32012R1106
