@@ -116,9 +116,9 @@ The application is a Node/Express server, running on port 3030 by default, confi
 
 ## Assumptions
 
-###Data/Coding
+### Data/Coding
 
-####Allowances
+#### Allowances
 Allowances for ROW are based on those quoted at https://www.gov.uk/duty-free-goods/arrivals-from-outside-the-eu with the addition of an allowance of 16l of cider. This allowance is treated the same as other alcohol allowances with regard to splitting. E.g. the passenger can import 8l of beer and 8l of cider and still be within the ROW allowance
 
 EU MILs are based on those quoted at https://www.gov.uk/duty-free-goods/arrivals-from-eu-countries
@@ -129,6 +129,15 @@ Products are identified by use of the 8 digit Comined Nomenclature (CN) Subheadi
 A defined subset of products and their CN codes is used in the system, as returned by the `/products` endpoint. 
 
 In some cases, a 'commoditycodequalifier' is used along with a CN code to identify a product, where the CN framework does not allow products to be identified to a level of granularity required by the duty system; e.g. the commoditycodequalifier 'children' is used alongside the CN code 62000000 to identify children's clothes (which is subject to a 0% VAT rate)
+
+Volumes as expressed in items submitted to the calculator are assumed to be in litres. Weights as expressed in items submitted to the calculator are assumed to be in grammes.
+
+#### Measures
+Measures are the taxes that are applied to imported items. There are three types: "vat" measures, "import" measures, and "excise" measures. There are two types of calculation that can be applied by measures: "ad valorem", where the duty to be paid is expressed as a percentge of the 'customsvalue' of the item, and 'flat', where a figure (in GBP) is applied in proportion to the 'quantity' of the item, which can be expressed in terms of weight, volume, or number of units (for cigarettes, for example). An example would be "£5 per litre". In the coding of "flat" measures, the attribute "perunitof" expresses the quantity that the flat rate is applied to, and can take the values "weight", "volume", or "quantity". Alongside this, for 'flat' measures there is also an attribute 'unitdivisor'. This is used to align the units of the items with the units in which the measure is expressed. For example, cigarette measures may be expressed by the business as "£5.67 per pack", with a pack being 20 cigarettes. Cigarette item quanities are expressed in quantity of cigarettes, therefore the 'unitdivisor' in this case should be 20. Similarly, some tobacco excise duties are expressed 'per kilogramme', with weight being expressed in grammes in the items.
+
+Measures are matched to items using a Regular Expression ("commoditycode" in the measure structure) that is matched to the coomodity code of an item submitted to the calculator.
+
+Each measure currently has an associated 'conditions' attribute, which is a function that should be applied before applying the measure itself. This 'conditions' function is used to further restrict the applicability of the measure (by restricting the country of origin of the item, or the commoditycode qualifier). Going forward, this approach to applying preconditions would need to be swapped out for a more declarative approach.
 
 
 #### Countries
@@ -143,14 +152,14 @@ This is currently limited to the following currencies:
 AUD,"BGN,BRL,CAD,CHF,CNY,CZK,DKK,EUR,HKD,HRK,HUF,IDR,ILS,INR,ISK,JPY,KRW,MXN,MYR,NOK,NZD,PHP,PLN,RON,RUB,SEK,SGD,THB,TRY,USD,ZAR
 
 
-###Allocation of Allowances
+### Allocation of Allowances
 When allocating allowances, items where the quantity is greater than 1 are assumed to be items of the same value for the purposes of allocating allowances. For example, an item of value $1000 consisting of 10 items is assumed to be 10 items each costing $100 dollars, for the purpose of allocating allowances. It could be that 3 of these items could be allocated as allowances, with the passenger having to pay duties on the remaining 7 items.
 
 Items expressed in grammes are currently assumed to be infinitely divisible. If, for example, a passenger brings in 500g of hand rolling tobacco in a single pack, they could end up having any proportion of this weight  allocated as allowance, eg 1/3, 1/4, 1/2 etc. NB This will need to be changed, as it violates the principle that individual products cannot be subdivided. If this item was declared instead as 20 packs of 50g, then the situation would be analogous to the clothing example above.
 
 A heuristic 'Hill-Cimbing' approach is currently taken to allocating allowances: allowances are filled iteratively; at each step the item is added to the allowances that saves the passenger the most money in terms of duty that would not need to be paid. No analysis has yet been performed to demonstrate that this is globally optimal. 
 
-###General
+### General
 No rounding of amounts/values is currently performed in the Simulator
 
 
